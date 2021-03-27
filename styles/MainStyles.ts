@@ -8,6 +8,10 @@ export const MainPageStyles = styled.div`
   }
 `;
 
+export const FlexStyles = styled.div`
+  display: flex;
+`;
+
 export const ColumnGrid = styled.div<{ columns: number }>`
   display: grid;
   grid-template-columns: repeat(${(props): number => props.columns}, 1fr);

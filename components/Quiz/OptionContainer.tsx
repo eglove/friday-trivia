@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import { Option } from '../../graphql/objectInterfaces';
-import { ColumnGrid, Display } from '../../styles/MainStyles';
+import { ColumnGrid, Display, FlexStyles } from '../../styles/MainStyles';
 import UpdateOption from './VoteButtons/UpdateOption';
-import { ShowHideButton } from '../../styles/QuizStyles';
+import { ShowHideButton, SuggestButton } from '../../styles/QuizStyles';
 
 interface IOptionContainer {
   options: Array<Option>;
@@ -15,13 +16,18 @@ export default function OptionContainer({
 
   return (
     <>
-      <ShowHideButton
-        onClick={(): void =>
-          setDisplayOption(displayOption === 'none' ? '' : 'none')
-        }
-      >
-        {displayOption === 'none' ? 'Show' : 'Hide'} Options
-      </ShowHideButton>
+      <FlexStyles>
+        <ShowHideButton
+          onClick={(): void =>
+            setDisplayOption(displayOption === 'none' ? '' : 'none')
+          }
+        >
+          {displayOption === 'none' ? 'Show' : 'Hide'} Options
+        </ShowHideButton>
+        <SuggestButton>
+          <Link href="/suggest-answer">Suggest Answers</Link>
+        </SuggestButton>
+      </FlexStyles>
       <Display display={displayOption}>
         {options.map((option: Option) => (
           <ColumnGrid columns={2} key={option.id}>

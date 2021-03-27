@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import { Question } from '../../graphql/objectInterfaces';
-import { ColumnGrid, Display } from '../../styles/MainStyles';
+import { ColumnGrid, Display, FlexStyles } from '../../styles/MainStyles';
 import OptionContainer from './OptionContainer';
 import UpdateQuestion from './VoteButtons/UpdateQuestion';
-import { ShowHideButton } from '../../styles/QuizStyles';
+import { ShowHideButton, SuggestButton } from '../../styles/QuizStyles';
 
 interface IQuestionContainer {
   questions: Array<Question>;
@@ -16,13 +17,18 @@ export default function QuestionContainer({
 
   return (
     <>
-      <ShowHideButton
-        onClick={(): void =>
-          setDisplayQuestion(displayQuestion === 'none' ? '' : 'none')
-        }
-      >
-        {displayQuestion === 'none' ? 'Show' : 'Hide'} Questions
-      </ShowHideButton>
+      <FlexStyles>
+        <ShowHideButton
+          onClick={(): void =>
+            setDisplayQuestion(displayQuestion === 'none' ? '' : 'none')
+          }
+        >
+          {displayQuestion === 'none' ? 'Show' : 'Hide'} Questions
+        </ShowHideButton>
+        <SuggestButton>
+          <Link href="/suggest-question">Suggest Questions</Link>
+        </SuggestButton>
+      </FlexStyles>
       <Display display={displayQuestion}>
         {questions.map((question: Question) => (
           <div key={question.id}>

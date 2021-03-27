@@ -34,6 +34,13 @@ export const ShowHideButton = styled(VoteButton)`
   margin: 0.2rem 0.2rem;
 `;
 
+export const SuggestButton = styled(ShowHideButton)`
+  a {
+    color: var(--fontColor);
+    text-decoration: none;
+  }
+`;
+
 export const SuggestQuizButtonGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, auto);
