@@ -6,7 +6,7 @@ export const NavStyles = styled.nav`
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
   box-shadow: var(--boxShadow);
-  margin-bottom: 1rem;
+  margin: 0 1rem 1rem 1rem;
 
   a,
   a:visited {

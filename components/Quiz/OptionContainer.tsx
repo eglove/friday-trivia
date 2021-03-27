@@ -9,7 +9,6 @@ interface IOptionContainer {
 export default function OptionContainer({
   options,
 }: IOptionContainer): JSX.Element {
-  console.log(options);
   return (
     <>
       {options.map((option: Option) => (

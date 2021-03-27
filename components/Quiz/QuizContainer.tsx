@@ -4,6 +4,7 @@ import { Quiz } from '../../graphql/objectInterfaces';
 import { QuizContainerStyles, VoteButton } from '../../styles/QuizStyles';
 import QuestionContainer from './QuestionContainer';
 import { ColumnGrid } from '../../styles/MainStyles';
+import SuggestQuiz from './SuggestQuiz';
 
 export default function QuizContainer(): JSX.Element {
   const { data, error, loading } = useQuery(ALL_QUIZZES_QUERY);
@@ -16,6 +17,7 @@ export default function QuizContainer(): JSX.Element {
 
   return (
     <>
+      <SuggestQuiz />
       {allQuizzes.map((quiz: Quiz) => (
         <QuizContainerStyles key={quiz.id}>
           <ColumnGrid columns={2}>
