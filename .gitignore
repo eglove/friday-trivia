@@ -15,6 +15,7 @@
 
 # Generated files
 .idea/**/contentModel.xml
+.keystone
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -180,7 +181,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+../friday-trivia-backend/.env
 .env.test
 .env*.local
 

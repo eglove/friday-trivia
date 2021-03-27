@@ -12,8 +12,7 @@
     "lint:css": "stylelint '**/*.css'",
     "dev": "next -p 7777",
     "build": "next build",
-    "start": "next start -p 7777",
-    "server": "nodemon server/src/index.ts"
+    "start": "next start -p 7777"
   },
   "browserslist": {
     "production": [
@@ -39,6 +38,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.13",
     "apollo-server": "^2.22.1",
+    "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
     "next": "^10.0.9",
     "nprogress": "^0.2.0",

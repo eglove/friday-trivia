@@ -12,6 +12,7 @@ export const daysUntilFriday = (): number => {
   const days = DaysOfWeek.Friday - new Date().getDay();
 
   // If today is Saturday, result will be -1 days to Friday
+  // Instead return 7 + -1
   if (days < 0) {
     return 7 + days;
   }
