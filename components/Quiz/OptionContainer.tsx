@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Option } from '../../graphql/objectInterfaces';
-import { ColumnGrid } from '../../styles/MainStyles';
+import { ColumnGrid, Display } from '../../styles/MainStyles';
 import UpdateOption from './VoteButtons/UpdateOption';
+import { ShowHideButton } from '../../styles/QuizStyles';
 
 interface IOptionContainer {
   options: Array<Option>;
@@ -9,14 +11,25 @@ interface IOptionContainer {
 export default function OptionContainer({
   options,
 }: IOptionContainer): JSX.Element {
+  const [displayOption, setDisplayOption] = useState('none');
+
   return (
     <>
-      {options.map((option: Option) => (
-        <ColumnGrid columns={2} key={option.id}>
-          <li>{option.content}</li>
-          <UpdateOption voteId={option.id} votes={option.votes} />
-        </ColumnGrid>
-      ))}
+      <ShowHideButton
+        onClick={(): void =>
+          setDisplayOption(displayOption === 'none' ? '' : 'none')
+        }
+      >
+        {displayOption === 'none' ? 'Show' : 'Hide'} Options
+      </ShowHideButton>
+      <Display display={displayOption}>
+        {options.map((option: Option) => (
+          <ColumnGrid columns={2} key={option.id}>
+            <li>{option.content}</li>
+            <UpdateOption voteId={option.id} votes={option.votes} />
+          </ColumnGrid>
+        ))}
+      </Display>
     </>
   );
 }
