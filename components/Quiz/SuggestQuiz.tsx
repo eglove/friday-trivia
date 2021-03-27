@@ -6,7 +6,7 @@ import {
 } from '../../styles/QuizStyles';
 
 export default function SuggestQuiz(): JSX.Element {
-  const { inputs, handleChange } = useForm();
+  const { inputs, handleChange, clearForm } = useForm();
 
   return (
     <>
@@ -25,12 +25,15 @@ export default function SuggestQuiz(): JSX.Element {
               id="subject"
               name="subject"
               placeholder="90's Movies"
+              value={inputs.subject}
               onChange={handleChange}
             />
           </label>
           <SuggestQuizButtonGrid>
             <button type="submit">Submit</button>
-            <button type="button">Cancel</button>
+            <button type="button" onClick={clearForm}>
+              Clear
+            </button>
           </SuggestQuizButtonGrid>
         </fieldset>
       </SuggestQuizForm>
