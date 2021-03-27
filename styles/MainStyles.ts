@@ -8,7 +8,11 @@ export const MainPageStyles = styled.div`
   }
 `;
 
-export const TwoColumnGrid = styled.div`
+export const ColumnGrid = styled.div<{ columns: number }>`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(${(props): number => props.columns}, 1fr);
+`;
+
+export const Display = styled.div<{ display: string }>`
+  display: ${(props): string => props.display};
 `;
