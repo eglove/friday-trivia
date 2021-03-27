@@ -7,9 +7,11 @@ export const ALL_QUIZZES_QUERY = gql`
       subject
       votes
       question {
+        id
         content
         votes
         option {
+          id
           content
           votes
         }
