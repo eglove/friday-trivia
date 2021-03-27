@@ -2,22 +2,26 @@ import React from 'react';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import { AppProps } from 'next/app';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import Page from '../components/Page';
 import '../styles/nprogress.css';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000',
-  cache: new InMemoryCache(),
-});
+import withData from '../lib/withData';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-export default function App({ Component, pageProps }: AppProps): JSX.Element {
+interface PagePropsWithApollo extends AppProps {
+  apollo: ApolloClient<object>;
+}
+
+function App({
+  Component,
+  pageProps,
+  apollo,
+}: PagePropsWithApollo): JSX.Element {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apollo}>
       <Page>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
@@ -25,3 +29,20 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
     </ApolloProvider>
   );
 }
+
+// Glue code for Apollo -> Nextjs
+// @ts-ignore
+App.getInitialProps = async function ({ Component, ctx }): Promise<Object> {
+  let pageProps = {
+    query: undefined,
+  };
+
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  pageProps.query = ctx.query;
+  return { pageProps };
+};
+
+// @ts-ignore
+export default withData(App);

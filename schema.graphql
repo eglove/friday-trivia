@@ -1,0 +1,781 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+union AuthenticatedItem = User
+
+union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess
+
+type KeystoneAdminMeta {
+    enableSessionItem: Boolean!
+    enableSignout: Boolean!
+    list(key: String!): KeystoneAdminUIListMeta
+    lists: [KeystoneAdminUIListMeta!]!
+}
+
+type KeystoneAdminUIFieldMeta {
+    createView: KeystoneAdminUIFieldMetaCreateView!
+    customViewsIndex: Int
+    fieldMeta: JSON
+    isOrderable: Boolean!
+    itemView(id: ID!): KeystoneAdminUIFieldMetaItemView
+    label: String!
+    listView: KeystoneAdminUIFieldMetaListView!
+    path: String!
+    viewsIndex: Int!
+}
+
+type KeystoneAdminUIFieldMetaCreateView {
+    fieldMode: KeystoneAdminUIFieldMetaCreateViewFieldMode!
+}
+
+type KeystoneAdminUIFieldMetaItemView {
+    fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode!
+}
+
+type KeystoneAdminUIFieldMetaListView {
+    fieldMode: KeystoneAdminUIFieldMetaListViewFieldMode!
+}
+
+type KeystoneAdminUIListMeta {
+    description: String
+    fields: [KeystoneAdminUIFieldMeta!]!
+    hideCreate: Boolean!
+    hideDelete: Boolean!
+    initialColumns: [String!]!
+    initialSort: KeystoneAdminUISort
+    isHidden: Boolean!
+    itemQueryName: String!
+    key: String!
+    label: String!
+    labelField: String!
+    listQueryName: String!
+    pageSize: Int!
+    path: String!
+    plural: String!
+    singular: String!
+}
+
+type KeystoneAdminUISort {
+    direction: KeystoneAdminUISortDirection!
+    field: String!
+}
+
+type KeystoneMeta {
+    adminMeta: KeystoneAdminMeta!
+}
+
+type Mutation {
+    authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult!
+    createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+    " Create a single Option item. "
+    createOption(data: OptionCreateInput): Option
+    " Create multiple Option items. "
+    createOptions(data: [OptionsCreateInput]): [Option]
+    " Create a single Question item. "
+    createQuestion(data: QuestionCreateInput): Question
+    " Create multiple Question items. "
+    createQuestions(data: [QuestionsCreateInput]): [Question]
+    " Create a single Quiz item. "
+    createQuiz(data: QuizCreateInput): Quiz
+    " Create multiple Quiz items. "
+    createQuizzes(data: [QuizzesCreateInput]): [Quiz]
+    " Create a single User item. "
+    createUser(data: UserCreateInput): User
+    " Create multiple User items. "
+    createUsers(data: [UsersCreateInput]): [User]
+    " Delete a single Option item by ID. "
+    deleteOption(id: ID!): Option
+    " Delete multiple Option items by ID. "
+    deleteOptions(ids: [ID!]): [Option]
+    " Delete a single Question item by ID. "
+    deleteQuestion(id: ID!): Question
+    " Delete multiple Question items by ID. "
+    deleteQuestions(ids: [ID!]): [Question]
+    " Delete a single Quiz item by ID. "
+    deleteQuiz(id: ID!): Quiz
+    " Delete multiple Quiz items by ID. "
+    deleteQuizzes(ids: [ID!]): [Quiz]
+    " Delete a single User item by ID. "
+    deleteUser(id: ID!): User
+    " Delete multiple User items by ID. "
+    deleteUsers(ids: [ID!]): [User]
+    endSession: Boolean!
+    " Update a single Option item by ID. "
+    updateOption(data: OptionUpdateInput, id: ID!): Option
+    " Update multiple Option items by ID. "
+    updateOptions(data: [OptionsUpdateInput]): [Option]
+    " Update a single Question item by ID. "
+    updateQuestion(data: QuestionUpdateInput, id: ID!): Question
+    " Update multiple Question items by ID. "
+    updateQuestions(data: [QuestionsUpdateInput]): [Question]
+    " Update a single Quiz item by ID. "
+    updateQuiz(data: QuizUpdateInput, id: ID!): Quiz
+    " Update multiple Quiz items by ID. "
+    updateQuizzes(data: [QuizzesUpdateInput]): [Quiz]
+    " Update a single User item by ID. "
+    updateUser(data: UserUpdateInput, id: ID!): User
+    " Update multiple User items by ID. "
+    updateUsers(data: [UsersUpdateInput]): [User]
+}
+
+" A keystone list "
+type Option {
+    _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    content: String
+    id: ID!
+    question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    votes: Int
+}
+
+type Query {
+    " Search for the Option item with the matching ID. "
+    Option(where: OptionWhereUniqueInput!): Option
+    " Search for the Question item with the matching ID. "
+    Question(where: QuestionWhereUniqueInput!): Question
+    " Search for the Quiz item with the matching ID. "
+    Quiz(where: QuizWhereUniqueInput!): Quiz
+    " Search for the User item with the matching ID. "
+    User(where: UserWhereUniqueInput!): User
+    " Retrieve the meta-data for the Option list. "
+    _OptionsMeta: _ListMeta
+    " Retrieve the meta-data for the Question list. "
+    _QuestionsMeta: _ListMeta
+    " Retrieve the meta-data for the Quiz list. "
+    _QuizzesMeta: _ListMeta
+    " Retrieve the meta-data for the User list. "
+    _UsersMeta: _ListMeta
+    " Perform a meta-query on all Option items which match the where clause. "
+    _allOptionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
+    " Perform a meta-query on all Question items which match the where clause. "
+    _allQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    " Perform a meta-query on all Quiz items which match the where clause. "
+    _allQuizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
+    " Perform a meta-query on all User items which match the where clause. "
+    _allUsersMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
+    " Retrieve the meta-data for all lists. "
+    _ksListsMeta(where: _ksListsMetaInput): [_ListMeta]
+    " Search for all Option items which match the where clause. "
+    allOptions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option]
+    " Search for all Question items which match the where clause. "
+    allQuestions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question]
+    " Search for all Quiz items which match the where clause. "
+    allQuizzes(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz]
+    " Search for all User items which match the where clause. "
+    allUsers(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User]
+    authenticatedItem: AuthenticatedItem
+    keystone: KeystoneMeta!
+}
+
+" A keystone list "
+type Question {
+    _optionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
+    _quizMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
+    content: String
+    id: ID!
+    option(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
+    quiz(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
+    votes: Int
+}
+
+" A keystone list "
+type Quiz {
+    _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    id: ID!
+    question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    subject: String
+    votes: Int
+    week: String
+}
+
+" A keystone list "
+type User {
+    currentWeekScore: Int
+    email: String
+    id: ID!
+    name: String
+    password_is_set: Boolean
+    totalScore: Int
+}
+
+type UserAuthenticationWithPasswordFailure {
+    code: PasswordAuthErrorCode!
+    message: String!
+}
+
+type UserAuthenticationWithPasswordSuccess {
+    item: User!
+    sessionToken: String!
+}
+
+type _ListAccess {
+    """
+
+    Access Control settings for the currently logged in (or anonymous)
+    user when performing 'auth' operations.
+    """
+    auth: JSON
+    """
+
+    Access Control settings for the currently logged in (or anonymous)
+    user when performing 'create' operations.
+    NOTE: 'create' can only return a Boolean.
+    It is not possible to specify a declarative Where clause for this
+    operation
+    """
+    create: Boolean
+    """
+
+    Access Control settings for the currently logged in (or anonymous)
+    user when performing 'delete' operations.
+    """
+    delete: JSON
+    """
+
+    Access Control settings for the currently logged in (or anonymous)
+    user when performing 'read' operations.
+    """
+    read: JSON
+    """
+
+    Access Control settings for the currently logged in (or anonymous)
+    user when performing 'update' operations.
+    """
+    update: JSON
+}
+
+type _ListInputTypes {
+    "Create mutation input type name"
+    createInput: String
+    "Create many mutation input type name"
+    createManyInput: String
+    "Update mutation name input"
+    updateInput: String
+    "Update many mutation name input"
+    updateManyInput: String
+    "Input type for matching multiple items"
+    whereInput: String
+    "Input type for matching a unique item"
+    whereUniqueInput: String
+}
+
+type _ListMeta {
+    "Access control configuration for the currently authenticated request"
+    access: _ListAccess
+    "The list's user-facing description"
+    description: String
+    "The Keystone list key"
+    key: String
+    "The list's display name in the Admin UI"
+    label: String
+    "The Keystone List name"
+    name: String @deprecated(reason : "Use `key` instead")
+    "The list's data path"
+    path: String
+    "The list's plural display name"
+    plural: String
+    "Information on the generated GraphQL schema"
+    schema: _ListSchema
+    "The list's singular display name"
+    singular: String
+}
+
+type _ListMutations {
+    "Create mutation name"
+    create: String
+    "Create many mutation name"
+    createMany: String
+    "Delete mutation name"
+    delete: String
+    "Delete many mutation name"
+    deleteMany: String
+    "Update mutation name"
+    update: String
+    "Update many mutation name"
+    updateMany: String
+}
+
+type _ListQueries {
+    "Single-item query name"
+    item: String
+    "All-items query name"
+    list: String
+    "List metadata query name"
+    meta: String
+}
+
+type _ListSchema {
+    "Information about fields defined on this list"
+    fields(where: _ListSchemaFieldsInput): [_ListSchemaFields]
+    "Top-level GraphQL input types"
+    inputTypes: _ListInputTypes
+    "Top-level GraphQL mutation names"
+    mutations: _ListMutations
+    """
+
+    Top level GraphQL query names which either return this type, or
+    provide aggregate information about this type
+    """
+    queries: _ListQueries
+    """
+
+    Information about fields on other types which return this type, or
+    provide aggregate information about this type
+    """
+    relatedFields: [_ListSchemaRelatedFields]
+    "The typename as used in GraphQL queries"
+    type: String
+}
+
+type _ListSchemaFields {
+    "The name of the field in its list"
+    name: String @deprecated(reason : "Use `path` instead")
+    "The path of the field in its list"
+    path: String
+    "The field type (ie, Checkbox, Text, etc)"
+    type: String
+}
+
+type _ListSchemaRelatedFields {
+    "A list of GraphQL field names"
+    fields: [String]
+    "The typename as used in GraphQL queries"
+    type: String
+}
+
+type _QueryMeta {
+    count: Int
+}
+
+enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
+    edit
+    hidden
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldMode {
+    edit
+    hidden
+    read
+}
+
+enum KeystoneAdminUIFieldMetaListViewFieldMode {
+    hidden
+    read
+}
+
+enum KeystoneAdminUISortDirection {
+    ASC
+    DESC
+}
+
+enum PasswordAuthErrorCode {
+    FAILURE
+    IDENTITY_NOT_FOUND
+    MULTIPLE_IDENTITY_MATCHES
+    SECRET_MISMATCH
+    SECRET_NOT_SET
+}
+
+enum SortOptionsBy {
+    content_ASC
+    content_DESC
+    id_ASC
+    id_DESC
+    question_ASC
+    question_DESC
+    votes_ASC
+    votes_DESC
+}
+
+enum SortQuestionsBy {
+    content_ASC
+    content_DESC
+    id_ASC
+    id_DESC
+    option_ASC
+    option_DESC
+    quiz_ASC
+    quiz_DESC
+    votes_ASC
+    votes_DESC
+}
+
+enum SortQuizzesBy {
+    id_ASC
+    id_DESC
+    question_ASC
+    question_DESC
+    subject_ASC
+    subject_DESC
+    votes_ASC
+    votes_DESC
+    week_ASC
+    week_DESC
+}
+
+enum SortUsersBy {
+    currentWeekScore_ASC
+    currentWeekScore_DESC
+    email_ASC
+    email_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    totalScore_ASC
+    totalScore_DESC
+}
+
+input CreateInitialUserInput {
+    email: String
+    name: String
+    password: String
+}
+
+input OptionCreateInput {
+    content: String
+    question: QuestionRelateToManyInput
+    votes: Int
+}
+
+input OptionRelateToManyInput {
+    connect: [OptionWhereUniqueInput]
+    create: [OptionCreateInput]
+    disconnect: [OptionWhereUniqueInput]
+    disconnectAll: Boolean
+}
+
+input OptionUpdateInput {
+    content: String
+    question: QuestionRelateToManyInput
+    votes: Int
+}
+
+input OptionWhereInput {
+    AND: [OptionWhereInput]
+    OR: [OptionWhereInput]
+    content: String
+    content_contains: String
+    content_contains_i: String
+    content_ends_with: String
+    content_ends_with_i: String
+    content_i: String
+    content_in: [String]
+    content_not: String
+    content_not_contains: String
+    content_not_contains_i: String
+    content_not_ends_with: String
+    content_not_ends_with_i: String
+    content_not_i: String
+    content_not_in: [String]
+    content_not_starts_with: String
+    content_not_starts_with_i: String
+    content_starts_with: String
+    content_starts_with_i: String
+    id: ID
+    id_in: [ID]
+    id_not: ID
+    id_not_in: [ID]
+    " condition must be true for all nodes "
+    question_every: QuestionWhereInput
+    " condition must be false for all nodes "
+    question_none: QuestionWhereInput
+    " condition must be true for at least 1 node "
+    question_some: QuestionWhereInput
+    votes: Int
+    votes_gt: Int
+    votes_gte: Int
+    votes_in: [Int]
+    votes_lt: Int
+    votes_lte: Int
+    votes_not: Int
+    votes_not_in: [Int]
+}
+
+input OptionWhereUniqueInput {
+    id: ID!
+}
+
+input OptionsCreateInput {
+    data: OptionCreateInput
+}
+
+input OptionsUpdateInput {
+    data: OptionUpdateInput
+    id: ID!
+}
+
+input QuestionCreateInput {
+    content: String
+    option: OptionRelateToManyInput
+    quiz: QuizRelateToManyInput
+    votes: Int
+}
+
+input QuestionRelateToManyInput {
+    connect: [QuestionWhereUniqueInput]
+    create: [QuestionCreateInput]
+    disconnect: [QuestionWhereUniqueInput]
+    disconnectAll: Boolean
+}
+
+input QuestionUpdateInput {
+    content: String
+    option: OptionRelateToManyInput
+    quiz: QuizRelateToManyInput
+    votes: Int
+}
+
+input QuestionWhereInput {
+    AND: [QuestionWhereInput]
+    OR: [QuestionWhereInput]
+    content: String
+    content_contains: String
+    content_contains_i: String
+    content_ends_with: String
+    content_ends_with_i: String
+    content_i: String
+    content_in: [String]
+    content_not: String
+    content_not_contains: String
+    content_not_contains_i: String
+    content_not_ends_with: String
+    content_not_ends_with_i: String
+    content_not_i: String
+    content_not_in: [String]
+    content_not_starts_with: String
+    content_not_starts_with_i: String
+    content_starts_with: String
+    content_starts_with_i: String
+    id: ID
+    id_in: [ID]
+    id_not: ID
+    id_not_in: [ID]
+    " condition must be true for all nodes "
+    option_every: OptionWhereInput
+    " condition must be false for all nodes "
+    option_none: OptionWhereInput
+    " condition must be true for at least 1 node "
+    option_some: OptionWhereInput
+    " condition must be true for all nodes "
+    quiz_every: QuizWhereInput
+    " condition must be false for all nodes "
+    quiz_none: QuizWhereInput
+    " condition must be true for at least 1 node "
+    quiz_some: QuizWhereInput
+    votes: Int
+    votes_gt: Int
+    votes_gte: Int
+    votes_in: [Int]
+    votes_lt: Int
+    votes_lte: Int
+    votes_not: Int
+    votes_not_in: [Int]
+}
+
+input QuestionWhereUniqueInput {
+    id: ID!
+}
+
+input QuestionsCreateInput {
+    data: QuestionCreateInput
+}
+
+input QuestionsUpdateInput {
+    data: QuestionUpdateInput
+    id: ID!
+}
+
+input QuizCreateInput {
+    question: QuestionRelateToManyInput
+    subject: String
+    votes: Int
+    week: String
+}
+
+input QuizRelateToManyInput {
+    connect: [QuizWhereUniqueInput]
+    create: [QuizCreateInput]
+    disconnect: [QuizWhereUniqueInput]
+    disconnectAll: Boolean
+}
+
+input QuizUpdateInput {
+    question: QuestionRelateToManyInput
+    subject: String
+    votes: Int
+    week: String
+}
+
+input QuizWhereInput {
+    AND: [QuizWhereInput]
+    OR: [QuizWhereInput]
+    id: ID
+    id_in: [ID]
+    id_not: ID
+    id_not_in: [ID]
+    " condition must be true for all nodes "
+    question_every: QuestionWhereInput
+    " condition must be false for all nodes "
+    question_none: QuestionWhereInput
+    " condition must be true for at least 1 node "
+    question_some: QuestionWhereInput
+    subject: String
+    subject_contains: String
+    subject_contains_i: String
+    subject_ends_with: String
+    subject_ends_with_i: String
+    subject_i: String
+    subject_in: [String]
+    subject_not: String
+    subject_not_contains: String
+    subject_not_contains_i: String
+    subject_not_ends_with: String
+    subject_not_ends_with_i: String
+    subject_not_i: String
+    subject_not_in: [String]
+    subject_not_starts_with: String
+    subject_not_starts_with_i: String
+    subject_starts_with: String
+    subject_starts_with_i: String
+    votes: Int
+    votes_gt: Int
+    votes_gte: Int
+    votes_in: [Int]
+    votes_lt: Int
+    votes_lte: Int
+    votes_not: Int
+    votes_not_in: [Int]
+    week: String
+    week_gt: String
+    week_gte: String
+    week_in: [String]
+    week_lt: String
+    week_lte: String
+    week_not: String
+    week_not_in: [String]
+}
+
+input QuizWhereUniqueInput {
+    id: ID!
+}
+
+input QuizzesCreateInput {
+    data: QuizCreateInput
+}
+
+input QuizzesUpdateInput {
+    data: QuizUpdateInput
+    id: ID!
+}
+
+input UserCreateInput {
+    currentWeekScore: Int
+    email: String
+    name: String
+    password: String
+    totalScore: Int
+}
+
+input UserUpdateInput {
+    currentWeekScore: Int
+    email: String
+    name: String
+    password: String
+    totalScore: Int
+}
+
+input UserWhereInput {
+    AND: [UserWhereInput]
+    OR: [UserWhereInput]
+    currentWeekScore: Int
+    currentWeekScore_gt: Int
+    currentWeekScore_gte: Int
+    currentWeekScore_in: [Int]
+    currentWeekScore_lt: Int
+    currentWeekScore_lte: Int
+    currentWeekScore_not: Int
+    currentWeekScore_not_in: [Int]
+    email: String
+    email_contains: String
+    email_contains_i: String
+    email_ends_with: String
+    email_ends_with_i: String
+    email_i: String
+    email_in: [String]
+    email_not: String
+    email_not_contains: String
+    email_not_contains_i: String
+    email_not_ends_with: String
+    email_not_ends_with_i: String
+    email_not_i: String
+    email_not_in: [String]
+    email_not_starts_with: String
+    email_not_starts_with_i: String
+    email_starts_with: String
+    email_starts_with_i: String
+    id: ID
+    id_in: [ID]
+    id_not: ID
+    id_not_in: [ID]
+    name: String
+    name_contains: String
+    name_contains_i: String
+    name_ends_with: String
+    name_ends_with_i: String
+    name_i: String
+    name_in: [String]
+    name_not: String
+    name_not_contains: String
+    name_not_contains_i: String
+    name_not_ends_with: String
+    name_not_ends_with_i: String
+    name_not_i: String
+    name_not_in: [String]
+    name_not_starts_with: String
+    name_not_starts_with_i: String
+    name_starts_with: String
+    name_starts_with_i: String
+    password_is_set: Boolean
+    totalScore: Int
+    totalScore_gt: Int
+    totalScore_gte: Int
+    totalScore_in: [Int]
+    totalScore_lt: Int
+    totalScore_lte: Int
+    totalScore_not: Int
+    totalScore_not_in: [Int]
+}
+
+input UserWhereUniqueInput {
+    id: ID!
+}
+
+input UsersCreateInput {
+    data: UserCreateInput
+}
+
+input UsersUpdateInput {
+    data: UserUpdateInput
+    id: ID!
+}
+
+input _ListSchemaFieldsInput {
+    type: String
+}
+
+input _ksListsMetaInput {
+    "Whether this is an auxiliary helper list"
+    auxiliary: Boolean
+    key: String
+}
+
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
