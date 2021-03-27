@@ -1,6 +1,6 @@
 import { Option } from '../../graphql/objectInterfaces';
 import { ColumnGrid } from '../../styles/MainStyles';
-import { VoteButton } from '../../styles/QuizStyles';
+import UpdateOption from './VoteButtons/UpdateOption';
 
 interface IOptionContainer {
   options: Array<Option>;
@@ -14,7 +14,7 @@ export default function OptionContainer({
       {options.map((option: Option) => (
         <ColumnGrid columns={2} key={option.id}>
           <li>{option.content}</li>
-          <VoteButton>{option.votes} Votes</VoteButton>
+          <UpdateOption voteId={option.id} votes={option.votes} />
         </ColumnGrid>
       ))}
     </>

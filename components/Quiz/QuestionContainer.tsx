@@ -1,7 +1,7 @@
 import { Question } from '../../graphql/objectInterfaces';
 import { ColumnGrid } from '../../styles/MainStyles';
 import OptionContainer from './OptionContainer';
-import { VoteButton } from '../../styles/QuizStyles';
+import UpdateQuestion from './VoteButtons/UpdateQuestion';
 
 interface IQuestionContainer {
   questions: Array<Question>;
@@ -16,7 +16,7 @@ export default function QuestionContainer({
         <div key={question.id}>
           <ColumnGrid columns={2} className="question">
             <div>{question.content}</div>
-            <VoteButton>{question.votes} Votes</VoteButton>
+            <UpdateQuestion voteId={question.id} votes={question.votes} />
           </ColumnGrid>
           <OptionContainer options={question.option} />
         </div>

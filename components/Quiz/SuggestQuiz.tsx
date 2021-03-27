@@ -10,7 +10,7 @@ import { ALL_QUIZZES_QUERY } from '../../graphql/queries';
 
 export default function SuggestQuiz(): JSX.Element {
   const { inputs, handleChange, clearForm } = useForm();
-  const [createQuiz, { loading, error, data }] = useMutation(
+  const [createQuiz, { loading, error }] = useMutation(
     SUGGEST_SUBJECT_MUTATION,
     {
       variables: inputs,
@@ -25,8 +25,7 @@ export default function SuggestQuiz(): JSX.Element {
           event.preventDefault();
           inputs.subject = inputs.subject.toLowerCase();
           clearForm();
-          const response = await createQuiz();
-          console.log(response);
+          await createQuiz();
         }}
       >
         {error && <p>Error! {error.message}</p>}

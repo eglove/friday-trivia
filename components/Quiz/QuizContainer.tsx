@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { ALL_QUIZZES_QUERY } from '../../graphql/queries';
 import { Quiz } from '../../graphql/objectInterfaces';
-import { QuizContainerStyles, VoteButton } from '../../styles/QuizStyles';
+import { QuizContainerStyles } from '../../styles/QuizStyles';
 import QuestionContainer from './QuestionContainer';
 import { ColumnGrid } from '../../styles/MainStyles';
 import SuggestQuiz from './SuggestQuiz';
+import UpdateQuiz from './VoteButtons/UpdateQuiz';
 
 export default function QuizContainer(): JSX.Element {
   const { data, error, loading } = useQuery(ALL_QUIZZES_QUERY);
@@ -22,7 +23,7 @@ export default function QuizContainer(): JSX.Element {
         <QuizContainerStyles key={quiz.id}>
           <ColumnGrid columns={2}>
             <div className="subject">{quiz.subject}</div>
-            <VoteButton>{quiz.votes} Votes</VoteButton>
+            <UpdateQuiz voteId={quiz.id} votes={quiz.votes} />
           </ColumnGrid>
           <QuestionContainer questions={quiz.question} />
         </QuizContainerStyles>

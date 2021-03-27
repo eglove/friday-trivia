@@ -6,14 +6,19 @@ export interface Quiz {
 }
 
 export interface Question {
-  id: number;
+  id: string;
   content: string;
   votes: number;
   option: Array<Option>;
 }
 
 export interface Option {
-  id: number;
+  id: string;
   content: string;
+  votes: number;
+}
+
+export interface Vote {
+  voteId: string;
   votes: number;
 }
