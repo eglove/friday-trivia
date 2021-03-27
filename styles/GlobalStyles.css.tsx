@@ -18,8 +18,6 @@ export const GlobalStyles = createGlobalStyle`
     --backgroundColor: whitesmoke;
     --itemBackgroundColor: white;
     --fontColor: black;
-    --headerColor: #066FC3;
-    --headerFontColor: white;
     --white: white;
     --boxShadow: 0 3px 3px rgba(0, 0, 0, 0.2);
     
@@ -31,15 +29,13 @@ export const GlobalStyles = createGlobalStyle`
       --backgroundColor: #23272A;
       --itemBackgroundColor: #2C2F33;
       --fontColor: white;
-      --headerColor: #7289DA;
-      --headerFontColor: white;
       --boxShadow: 0 3px 3px rgba(255, 255, 255, 0.2);
     }
   }
   
   html {
     max-width: 1000px;
-    margin: 1rem;
+    margin: 1rem auto;
     background-color: var(--backgroundColor);
     color: var(--fontColor);
     font-family: Raleway, sans-serif;
