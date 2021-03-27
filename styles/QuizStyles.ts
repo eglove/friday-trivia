@@ -9,6 +9,7 @@ export const QuizContainerStyles = styled(ContentVisibility)`
 
   .subject {
     font-weight: bold;
+    text-transform: capitalize;
   }
 
   .question {

@@ -1,22 +1,36 @@
 import { FormEvent } from 'react';
+import { useMutation } from '@apollo/client';
 import useForm from '../../lib/useForm';
 import {
   SuggestQuizForm,
   SuggestQuizButtonGrid,
 } from '../../styles/QuizStyles';
+import { SUGGEST_SUBJECT_MUTATION } from '../../graphql/mutations';
+import { ALL_QUIZZES_QUERY } from '../../graphql/queries';
 
 export default function SuggestQuiz(): JSX.Element {
   const { inputs, handleChange, clearForm } = useForm();
+  const [createQuiz, { loading, error, data }] = useMutation(
+    SUGGEST_SUBJECT_MUTATION,
+    {
+      variables: inputs,
+      refetchQueries: [{ query: ALL_QUIZZES_QUERY }],
+    }
+  );
 
   return (
     <>
       <SuggestQuizForm
-        onSubmit={(event: FormEvent<HTMLFormElement>): void => {
+        onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
-          console.log(inputs);
+          inputs.subject = inputs.subject.toLowerCase();
+          clearForm();
+          const response = await createQuiz();
+          console.log(response);
         }}
       >
-        <fieldset>
+        {error && <p>Error! {error.message}</p>}
+        <fieldset disabled={loading} aria-busy={loading}>
           <label htmlFor="subject">
             💡 Suggest Subject:&emsp;
             <input
