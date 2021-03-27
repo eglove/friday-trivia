@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent } from 'react';
 import useForm from '../../lib/useForm';
 import {
   SuggestQuizForm,
@@ -6,49 +6,34 @@ import {
 } from '../../styles/QuizStyles';
 
 export default function SuggestQuiz(): JSX.Element {
-  const { inputs, handleChange, clearForm } = useForm();
-  const [showQuizSuggestForm, setShowQuizSuggestForm] = useState(false);
+  const { inputs, handleChange } = useForm();
 
   return (
     <>
-      {showQuizSuggestForm ? (
-        <SuggestQuizForm>
+      <SuggestQuizForm
+        onSubmit={(event: FormEvent<HTMLFormElement>): void => {
+          event.preventDefault();
+          console.log(inputs);
+        }}
+      >
+        <fieldset>
           <label htmlFor="subject">
-            Subject:&emsp;
+            💡 Suggest Subject:&emsp;
             <input
+              required
               type="text"
               id="subject"
               name="subject"
-              placeholder="Subject"
-              value={inputs.subject}
+              placeholder="90's Movies"
               onChange={handleChange}
             />
           </label>
           <SuggestQuizButtonGrid>
-            <button type="button" onClick={clearForm}>
-              Submit
-            </button>
-            <button
-              type="button"
-              onClick={(): void => {
-                setShowQuizSuggestForm(false);
-                clearForm();
-              }}
-            >
-              Cancel
-            </button>
+            <button type="submit">Submit</button>
+            <button type="button">Cancel</button>
           </SuggestQuizButtonGrid>
-        </SuggestQuizForm>
-      ) : (
-        <SuggestQuizForm>
-          <button
-            type="button"
-            onClick={(): void => setShowQuizSuggestForm(true)}
-          >
-            Suggest Quiz Subject 💡
-          </button>
-        </SuggestQuizForm>
-      )}
+        </fieldset>
+      </SuggestQuizForm>
     </>
   );
 }

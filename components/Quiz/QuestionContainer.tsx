@@ -13,13 +13,13 @@ export default function QuestionContainer({
   return (
     <>
       {questions.map((question: Question) => (
-        <>
+        <div key={question.id}>
           <ColumnGrid columns={2} className="question">
             <div>{question.content}</div>
             <VoteButton>{question.votes} Votes</VoteButton>
           </ColumnGrid>
           <OptionContainer options={question.option} />
-        </>
+        </div>
       ))}
     </>
   );

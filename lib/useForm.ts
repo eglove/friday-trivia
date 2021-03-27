@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// TODO use generics rather than any
 export default function useForm(initial = {}): any {
+  // create a state object for our inputs
   const [inputs, setInputs] = useState(initial);
+  const initialValues = Object.values(initial).join('');
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    let { value, name, type } = event.target;
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setInputs(initial);
+  }, [initialValues]);
 
+  function handleChange(e: any): void {
+    let { value, name, type } = e.target;
     if (type === 'number') {
-      // @ts-ignore allow conversion
       value = parseInt(value, 10);
     }
-
     if (type === 'file') {
-      // @ts-ignore allow conversion
-      value[0] = event.target.files;
+      [value] = e.target.files;
     }
-
     setInputs({
+      // copy the existing state
       ...inputs,
       [name]: value,
     });
@@ -35,6 +37,7 @@ export default function useForm(initial = {}): any {
     setInputs(blankState);
   }
 
+  // return the things we want to surface from this custom hook
   return {
     inputs,
     handleChange,

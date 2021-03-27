@@ -12,7 +12,7 @@ export default function OptionContainer({
   return (
     <>
       {options.map((option: Option) => (
-        <ColumnGrid columns={2}>
+        <ColumnGrid columns={2} key={option.id}>
           <li>{option.content}</li>
           <VoteButton>{option.votes} Votes</VoteButton>
         </ColumnGrid>
