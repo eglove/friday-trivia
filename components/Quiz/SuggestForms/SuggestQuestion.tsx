@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Quiz } from '../../../graphql/objectInterfaces';
 import {
   SuggestionButtonGrid,
-  SuggestionForm,
+  SuggestionFormStyles,
 } from '../../../styles/QuizStyles';
 import useForm from '../../../lib/useForm';
 import { SUGGEST_QUESTION_MUTATION } from '../../../graphql/mutations';
@@ -39,7 +39,7 @@ export default function SuggestQuestion({
         <title>Friday Trivia | Question Suggestions</title>
       </Head>
       <h2>Suggest Questions for {quiz.subject}</h2>
-      <SuggestionForm
+      <SuggestionFormStyles
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
           clearForm();
@@ -69,7 +69,7 @@ export default function SuggestQuestion({
             </button>
           </SuggestionButtonGrid>
         </fieldset>
-      </SuggestionForm>
+      </SuggestionFormStyles>
       <QuestionContainer quizId={quiz.id} questions={quiz.question} />
     </MainPageStyles>
   );

@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 import Head from 'next/head';
 import { Question } from '../../../graphql/objectInterfaces';
 import {
-  SuggestionForm,
+  SuggestionFormStyles,
   SuggestionButtonGrid,
 } from '../../../styles/QuizStyles';
 import OptionContainer from '../OptionContainer';
@@ -40,7 +40,7 @@ export default function SuggestOption({
       </Head>
       <h2>Suggest answers for:</h2>
       <h3>{question.content}</h3>
-      <SuggestionForm
+      <SuggestionFormStyles
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
           clearForm();
@@ -70,7 +70,7 @@ export default function SuggestOption({
             </button>
           </SuggestionButtonGrid>
         </fieldset>
-      </SuggestionForm>
+      </SuggestionFormStyles>
       <OptionContainer options={question.option} questionId={question.id} />
     </MainPageStyles>
   );

@@ -1,5 +1,65 @@
 import { gql } from '@apollo/client';
 
+export const LOGIN_MUTATION = gql`
+  mutation LOGIN_MUTATION($email: String!, $password: String!) {
+    authenticateUserWithPassword(email: $email, password: $password) {
+      ... on UserAuthenticationWithPasswordSuccess {
+        item {
+          id
+        }
+      }
+
+      ... on UserAuthenticationWithPasswordFailure {
+        message
+      }
+    }
+  }
+`;
+
+export const SIGN_UP_MUTATION = gql`
+  mutation SIGN_UP_MUTATION(
+    $name: String!
+    $email: String!
+    $password: String!
+  ) {
+    createUser(data: { name: $name, email: $email, password: $password }) {
+      id
+      email
+    }
+  }
+`;
+
+export const REQUEST_PASSWORD_RESET_MUTATION = gql`
+  mutation REQUEST_PASSWORD_RESET_MUTATION($email: String!) {
+    sendUserPasswordResetLink(email: $email) {
+      code
+      message
+    }
+  }
+`;
+
+export const PASSWORD_RESET_MUTATION = gql`
+  mutation PASSWORD_RESET_MUTATION(
+    $email: String!
+    $password: String!
+    $token: String!
+  ) {
+    redeemUserPasswordResetToken(
+      email: $email
+      password: $password
+      token: $token
+    ) {
+      message
+    }
+  }
+`;
+
+export const SIGN_OUT_MUTATION = gql`
+  mutation SIGN_OUT_MUTATION {
+    endSession
+  }
+`;
+
 export const SUGGEST_SUBJECT_MUTATION = gql`
   mutation SUGGEST_SUBJECT_MUTATION($subject: String!) {
     createQuiz(data: { subject: $subject }) {

@@ -59,7 +59,7 @@ export const SuggestionButtonGrid = styled.div`
   }
 `;
 
-export const SuggestionForm = styled.form`
+export const SuggestionFormStyles = styled.form`
   display: grid;
   margin: 1rem auto;
   text-align: center;

@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import { useMutation } from '@apollo/client';
 import useForm from '../../../lib/useForm';
 import {
-  SuggestionForm,
+  SuggestionFormStyles,
   SuggestionButtonGrid,
 } from '../../../styles/QuizStyles';
 import { SUGGEST_SUBJECT_MUTATION } from '../../../graphql/mutations';
@@ -20,7 +20,7 @@ export default function SuggestQuiz(): JSX.Element {
 
   return (
     <>
-      <SuggestionForm
+      <SuggestionFormStyles
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
           inputs.subject = inputs.subject.toLowerCase();
@@ -49,7 +49,7 @@ export default function SuggestQuiz(): JSX.Element {
             </button>
           </SuggestionButtonGrid>
         </fieldset>
-      </SuggestionForm>
+      </SuggestionFormStyles>
     </>
   );
 }

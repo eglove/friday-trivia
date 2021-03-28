@@ -1,7 +1,19 @@
 import { gql } from '@apollo/client';
 
+export const CURRENT_USER_QUERY = gql`
+  query CURRENT_USER_QUERY {
+    authenticatedItem {
+      ... on User {
+        id
+        email
+        name
+      }
+    }
+  }
+`;
+
 export const ALL_QUIZZES_QUERY = gql`
-  query($skip: Int = 0, $first: Int) {
+  query ALL_QUIZZES_QUERY($skip: Int = 0, $first: Int) {
     allQuizzes(first: $first, skip: $skip, sortBy: [votes_DESC]) {
       id
       subject
