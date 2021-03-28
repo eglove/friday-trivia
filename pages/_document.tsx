@@ -11,6 +11,7 @@ import { ServerStyleSheet } from 'styled-components';
 
 export default class Document extends NextDocument {
   /* eslint-disable */
+    // Server side render styled components
     static async getInitialProps(ctx: DocumentContext) {
         const sheet = new ServerStyleSheet();
         const originalRenderPage = ctx.renderPage;
