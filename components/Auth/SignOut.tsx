@@ -8,7 +8,8 @@ export default function SignOut(): JSX.Element {
   });
 
   return (
-    <button type="button" onClick={(): any => signOut}>
+    // @ts-ignore
+    <button type="button" className="signOutButton" onClick={signOut}>
       Sign Out
     </button>
   );
