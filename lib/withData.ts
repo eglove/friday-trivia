@@ -4,6 +4,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import { endpoint, prodEndpoint } from '../config';
+import paginationField from './paginationField';
 
 // @ts-ignore
 function createClient({ headers, initialState }): ApolloClient<object> {
@@ -37,7 +38,9 @@ function createClient({ headers, initialState }): ApolloClient<object> {
       typePolicies: {
         Query: {
           fields: {
-            // TODO
+            // Customize handling of allQuizzes query
+            // This will help keep cache consistent on pagination
+            allQuizzes: paginationField(),
           },
         },
       },

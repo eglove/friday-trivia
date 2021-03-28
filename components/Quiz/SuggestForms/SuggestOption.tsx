@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { FormEvent } from 'react';
+import Head from 'next/head';
 import { Question } from '../../../graphql/objectInterfaces';
 import {
   SuggestionForm,
@@ -9,6 +10,7 @@ import OptionContainer from '../OptionContainer';
 import useForm from '../../../lib/useForm';
 import { SUGGEST_OPTION_MUTATION } from '../../../graphql/mutations';
 import { SINGLE_QUESTION_QUERY } from '../../../graphql/queries';
+import { MainPageStyles } from '../../../styles/MainStyles';
 
 interface ISuggestOption {
   question: Question;
@@ -32,7 +34,10 @@ export default function SuggestOption({
   );
 
   return (
-    <>
+    <MainPageStyles>
+      <Head>
+        <title>Friday Trivia | Answer Suggestions</title>
+      </Head>
       <h2>Suggest answers for:</h2>
       <h3>{question.content}</h3>
       <SuggestionForm
@@ -67,6 +72,6 @@ export default function SuggestOption({
         </fieldset>
       </SuggestionForm>
       <OptionContainer options={question.option} questionId={question.id} />
-    </>
+    </MainPageStyles>
   );
 }

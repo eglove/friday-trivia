@@ -20,3 +20,25 @@ export const NavStyles = styled.nav`
     text-decoration: underline;
   }
 `;
+
+export const PaginationStyles = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem 0;
+
+  a,
+  .paginationSection {
+    border: 1px solid lightgray;
+    padding: 0.2rem 1rem;
+    margin: 0;
+    color: var(--fontColor);
+    text-decoration: none;
+  }
+
+  a[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: 40%;
+  }
+`;

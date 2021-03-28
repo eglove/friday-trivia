@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { FormEvent } from 'react';
+import Head from 'next/head';
 import { Quiz } from '../../../graphql/objectInterfaces';
 import {
   SuggestionButtonGrid,
@@ -9,6 +10,7 @@ import useForm from '../../../lib/useForm';
 import { SUGGEST_QUESTION_MUTATION } from '../../../graphql/mutations';
 import { SINGLE_QUIZ_QUERY } from '../../../graphql/queries';
 import QuestionContainer from '../QuestionContainer';
+import { MainPageStyles } from '../../../styles/MainStyles';
 
 interface ISuggestQuestion {
   quiz: Quiz;
@@ -32,7 +34,10 @@ export default function SuggestQuestion({
   );
 
   return (
-    <>
+    <MainPageStyles>
+      <Head>
+        <title>Friday Trivia | Question Suggestions</title>
+      </Head>
       <h2>Suggest Questions for {quiz.subject}</h2>
       <SuggestionForm
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -66,6 +71,6 @@ export default function SuggestQuestion({
         </fieldset>
       </SuggestionForm>
       <QuestionContainer quizId={quiz.id} questions={quiz.question} />
-    </>
+    </MainPageStyles>
   );
 }

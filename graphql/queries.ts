@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const ALL_QUIZZES_QUERY = gql`
-  query {
-    allQuizzes(sortBy: [votes_DESC]) {
+  query($skip: Int = 0, $first: Int) {
+    allQuizzes(first: $first, skip: $skip, sortBy: [votes_DESC]) {
       id
       subject
       votes
@@ -51,6 +51,14 @@ export const SINGLE_QUESTION_QUERY = gql`
         content
         votes
       }
+    }
+  }
+`;
+
+export const TOTAL_QUIZZES_QUERY = gql`
+  query TOTAL_QUIZZES_QUERY {
+    _allQuizzesMeta {
+      count
     }
   }
 `;

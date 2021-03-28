@@ -1,13 +1,9 @@
-import { MainPageStyles } from '../styles/MainStyles';
-import CountdownToTrivia from '../components/CountdownToTrivia';
-import QuizContainer from '../components/Quiz/QuizContainer';
+import Voting from '../components/Quiz/Voting';
 
 export default function Index(): JSX.Element {
   return (
-    <MainPageStyles>
-      <h1>Friday Trivia</h1>
-      <CountdownToTrivia />
-      <QuizContainer />
-    </MainPageStyles>
+    <>
+      <Voting />
+    </>
   );
 }
