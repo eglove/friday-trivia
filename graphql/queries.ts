@@ -19,3 +19,23 @@ export const ALL_QUIZZES_QUERY = gql`
     }
   }
 `;
+
+export const SINGLE_QUIZ_QUERY = gql`
+  query SINGLE_QUIZ_QUERY($id: ID!) {
+    Quiz(where: { id: $id }) {
+      id
+      subject
+      votes
+      question(sortBy: [votes_DESC]) {
+        id
+        content
+        votes
+        option(sortBy: [votes_DESC]) {
+          id
+          content
+          votes
+        }
+      }
+    }
+  }
+`;

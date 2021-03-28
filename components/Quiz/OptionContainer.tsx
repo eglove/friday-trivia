@@ -7,10 +7,12 @@ import { ShowHideButton, SuggestButton } from '../../styles/QuizStyles';
 
 interface IOptionContainer {
   options: Array<Option>;
+  questionId: string;
 }
 
 export default function OptionContainer({
   options,
+  questionId,
 }: IOptionContainer): JSX.Element {
   const [displayOption, setDisplayOption] = useState('none');
 
@@ -22,10 +24,10 @@ export default function OptionContainer({
             setDisplayOption(displayOption === 'none' ? '' : 'none')
           }
         >
-          {displayOption === 'none' ? 'Show' : 'Hide'} Options
+          {displayOption === 'none' ? 'Show' : 'Hide'} {options.length} Options
         </ShowHideButton>
         <SuggestButton>
-          <Link href="/suggest-answer">Suggest Answers</Link>
+          <Link href={`/suggest-answer/${questionId}`}>Suggest Answers</Link>
         </SuggestButton>
       </FlexStyles>
       <Display display={displayOption}>

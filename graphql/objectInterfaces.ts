@@ -22,3 +22,7 @@ export interface Vote {
   voteId: string;
   votes: number;
 }
+
+export interface IId {
+  questionId: string;
+}

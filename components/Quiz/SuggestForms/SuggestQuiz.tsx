@@ -1,12 +1,12 @@
 import { FormEvent } from 'react';
 import { useMutation } from '@apollo/client';
-import useForm from '../../lib/useForm';
+import useForm from '../../../lib/useForm';
 import {
   SuggestQuizForm,
   SuggestQuizButtonGrid,
-} from '../../styles/QuizStyles';
-import { SUGGEST_SUBJECT_MUTATION } from '../../graphql/mutations';
-import { ALL_QUIZZES_QUERY } from '../../graphql/queries';
+} from '../../../styles/QuizStyles';
+import { SUGGEST_SUBJECT_MUTATION } from '../../../graphql/mutations';
+import { ALL_QUIZZES_QUERY } from '../../../graphql/queries';
 
 export default function SuggestQuiz(): JSX.Element {
   const { inputs, handleChange, clearForm } = useForm();

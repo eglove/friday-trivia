@@ -4,7 +4,7 @@ import { Quiz } from '../../graphql/objectInterfaces';
 import { QuizContainerStyles } from '../../styles/QuizStyles';
 import QuestionContainer from './QuestionContainer';
 import { ColumnGrid } from '../../styles/MainStyles';
-import SuggestQuiz from './SuggestQuiz';
+import SuggestQuiz from './SuggestForms/SuggestQuiz';
 import UpdateQuiz from './VoteButtons/UpdateQuiz';
 
 export default function QuizContainer(): JSX.Element {
@@ -25,7 +25,7 @@ export default function QuizContainer(): JSX.Element {
             <div className="subject">{quiz.subject}</div>
             <UpdateQuiz voteId={quiz.id} votes={quiz.votes} />
           </ColumnGrid>
-          <QuestionContainer questions={quiz.question} />
+          <QuestionContainer quizId={quiz.id} questions={quiz.question} />
         </QuizContainerStyles>
       ))}
     </>

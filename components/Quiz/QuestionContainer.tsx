@@ -8,10 +8,12 @@ import { ShowHideButton, SuggestButton } from '../../styles/QuizStyles';
 
 interface IQuestionContainer {
   questions: Array<Question>;
+  quizId: string;
 }
 
 export default function QuestionContainer({
   questions,
+  quizId,
 }: IQuestionContainer): JSX.Element {
   const [displayQuestion, setDisplayQuestion] = useState('none');
 
@@ -23,10 +25,11 @@ export default function QuestionContainer({
             setDisplayQuestion(displayQuestion === 'none' ? '' : 'none')
           }
         >
-          {displayQuestion === 'none' ? 'Show' : 'Hide'} Questions
+          {displayQuestion === 'none' ? 'Show' : 'Hide'} {questions.length}{' '}
+          Questions
         </ShowHideButton>
         <SuggestButton>
-          <Link href="/suggest-question">Suggest Questions</Link>
+          <Link href={`/suggest-question/${quizId}`}>Suggest Questions</Link>
         </SuggestButton>
       </FlexStyles>
       <Display display={displayQuestion}>
@@ -36,7 +39,10 @@ export default function QuestionContainer({
               <div>{question.content}</div>
               <UpdateQuestion voteId={question.id} votes={question.votes} />
             </ColumnGrid>
-            <OptionContainer options={question.option} />
+            <OptionContainer
+              questionId={question.id}
+              options={question.option}
+            />
           </div>
         ))}
       </Display>

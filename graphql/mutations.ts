@@ -8,6 +8,16 @@ export const SUGGEST_SUBJECT_MUTATION = gql`
   }
 `;
 
+export const SUGGEST_QUESTION_MUTATION = gql`
+  mutation SUGGEST_QUESTION_MUTATION($quizId: ID!, $content: String!) {
+    createQuestion(
+      data: { content: $content, quiz: { connect: { id: $quizId } } }
+    ) {
+      id
+    }
+  }
+`;
+
 export const VOTE_ON_QUIZ = gql`
   mutation VOTE_ON_QUIZ($id: ID!, $votes: Int) {
     updateQuiz(id: $id, data: { votes: $votes }) {
