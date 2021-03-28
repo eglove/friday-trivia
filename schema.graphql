@@ -83,6 +83,10 @@ type Mutation {
     createQuiz(data: QuizCreateInput): Quiz
     " Create multiple Quiz items. "
     createQuizzes(data: [QuizzesCreateInput]): [Quiz]
+    " Create a single TriviaState item. "
+    createTriviaState(data: TriviaStateCreateInput): TriviaState
+    " Create multiple TriviaState items. "
+    createTriviaStates(data: [TriviaStatesCreateInput]): [TriviaState]
     " Create a single User item. "
     createUser(data: UserCreateInput): User
     " Create multiple User items. "
@@ -99,11 +103,17 @@ type Mutation {
     deleteQuiz(id: ID!): Quiz
     " Delete multiple Quiz items by ID. "
     deleteQuizzes(ids: [ID!]): [Quiz]
+    " Delete a single TriviaState item by ID. "
+    deleteTriviaState(id: ID!): TriviaState
+    " Delete multiple TriviaState items by ID. "
+    deleteTriviaStates(ids: [ID!]): [TriviaState]
     " Delete a single User item by ID. "
     deleteUser(id: ID!): User
     " Delete multiple User items by ID. "
     deleteUsers(ids: [ID!]): [User]
     endSession: Boolean!
+    redeemUserPasswordResetToken(email: String!, password: String!, token: String!): RedeemUserPasswordResetTokenResult
+    sendUserPasswordResetLink(email: String!): SendUserPasswordResetLinkResult
     " Update a single Option item by ID. "
     updateOption(data: OptionUpdateInput, id: ID!): Option
     " Update multiple Option items by ID. "
@@ -116,6 +126,10 @@ type Mutation {
     updateQuiz(data: QuizUpdateInput, id: ID!): Quiz
     " Update multiple Quiz items by ID. "
     updateQuizzes(data: [QuizzesUpdateInput]): [Quiz]
+    " Update a single TriviaState item by ID. "
+    updateTriviaState(data: TriviaStateUpdateInput, id: ID!): TriviaState
+    " Update multiple TriviaState items by ID. "
+    updateTriviaStates(data: [TriviaStatesUpdateInput]): [TriviaState]
     " Update a single User item by ID. "
     updateUser(data: UserUpdateInput, id: ID!): User
     " Update multiple User items by ID. "
@@ -125,9 +139,11 @@ type Mutation {
 " A keystone list "
 type Option {
     _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
     question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
 }
 
@@ -138,6 +154,8 @@ type Query {
     Question(where: QuestionWhereUniqueInput!): Question
     " Search for the Quiz item with the matching ID. "
     Quiz(where: QuizWhereUniqueInput!): Quiz
+    " Search for the TriviaState item with the matching ID. "
+    TriviaState(where: TriviaStateWhereUniqueInput!): TriviaState
     " Search for the User item with the matching ID. "
     User(where: UserWhereUniqueInput!): User
     " Retrieve the meta-data for the Option list. "
@@ -146,6 +164,8 @@ type Query {
     _QuestionsMeta: _ListMeta
     " Retrieve the meta-data for the Quiz list. "
     _QuizzesMeta: _ListMeta
+    " Retrieve the meta-data for the TriviaState list. "
+    _TriviaStatesMeta: _ListMeta
     " Retrieve the meta-data for the User list. "
     _UsersMeta: _ListMeta
     " Perform a meta-query on all Option items which match the where clause. "
@@ -154,6 +174,8 @@ type Query {
     _allQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     " Perform a meta-query on all Quiz items which match the where clause. "
     _allQuizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
+    " Perform a meta-query on all TriviaState items which match the where clause. "
+    _allTriviaStatesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortTriviaStatesBy!], where: TriviaStateWhereInput): _QueryMeta
     " Perform a meta-query on all User items which match the where clause. "
     _allUsersMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     " Retrieve the meta-data for all lists. "
@@ -164,41 +186,73 @@ type Query {
     allQuestions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question]
     " Search for all Quiz items which match the where clause. "
     allQuizzes(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz]
+    " Search for all TriviaState items which match the where clause. "
+    allTriviaStates(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortTriviaStatesBy!], where: TriviaStateWhereInput): [TriviaState]
     " Search for all User items which match the where clause. "
     allUsers(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User]
     authenticatedItem: AuthenticatedItem
     keystone: KeystoneMeta!
+    validateUserPasswordResetToken(email: String!, token: String!): ValidateUserPasswordResetTokenResult
 }
 
 " A keystone list "
 type Question {
     _optionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
     _quizMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
+    _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
     option(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
     quiz(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
+    usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
 }
 
 " A keystone list "
 type Quiz {
     _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     id: ID!
     question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
     subject: String
+    usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
     week: String
 }
 
+type RedeemUserPasswordResetTokenResult {
+    code: PasswordResetRedemptionErrorCode!
+    message: String!
+}
+
+type SendUserPasswordResetLinkResult {
+    code: PasswordResetRequestErrorCode!
+    message: String!
+}
+
+" A keystone list "
+type TriviaState {
+    id: ID!
+    status: String
+}
+
 " A keystone list "
 type User {
+    _votedOnOptionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
+    _votedOnQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    _votedOnQuizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
     currentWeekScore: Int
     email: String
     id: ID!
     name: String
+    passwordResetIssuedAt: String
+    passwordResetRedeemedAt: String
+    passwordResetToken_is_set: Boolean
     password_is_set: Boolean
     totalScore: Int
+    votedOnOptions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
+    votedOnQuestions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    votedOnQuizzes(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
 }
 
 type UserAuthenticationWithPasswordFailure {
@@ -209,6 +263,11 @@ type UserAuthenticationWithPasswordFailure {
 type UserAuthenticationWithPasswordSuccess {
     item: User!
     sessionToken: String!
+}
+
+type ValidateUserPasswordResetTokenResult {
+    code: PasswordResetRedemptionErrorCode!
+    message: String!
 }
 
 type _ListAccess {
@@ -379,6 +438,21 @@ enum PasswordAuthErrorCode {
     SECRET_NOT_SET
 }
 
+enum PasswordResetRedemptionErrorCode {
+    FAILURE
+    IDENTITY_NOT_FOUND
+    MULTIPLE_IDENTITY_MATCHES
+    TOKEN_EXPIRED
+    TOKEN_MISMATCH
+    TOKEN_NOT_SET
+    TOKEN_REDEEMED
+}
+
+enum PasswordResetRequestErrorCode {
+    IDENTITY_NOT_FOUND
+    MULTIPLE_IDENTITY_MATCHES
+}
+
 enum SortOptionsBy {
     content_ASC
     content_DESC
@@ -386,6 +460,8 @@ enum SortOptionsBy {
     id_DESC
     question_ASC
     question_DESC
+    usersVoted_ASC
+    usersVoted_DESC
     votes_ASC
     votes_DESC
 }
@@ -399,6 +475,8 @@ enum SortQuestionsBy {
     option_DESC
     quiz_ASC
     quiz_DESC
+    usersVoted_ASC
+    usersVoted_DESC
     votes_ASC
     votes_DESC
 }
@@ -410,10 +488,19 @@ enum SortQuizzesBy {
     question_DESC
     subject_ASC
     subject_DESC
+    usersVoted_ASC
+    usersVoted_DESC
     votes_ASC
     votes_DESC
     week_ASC
     week_DESC
+}
+
+enum SortTriviaStatesBy {
+    id_ASC
+    id_DESC
+    status_ASC
+    status_DESC
 }
 
 enum SortUsersBy {
@@ -425,8 +512,18 @@ enum SortUsersBy {
     id_DESC
     name_ASC
     name_DESC
+    passwordResetIssuedAt_ASC
+    passwordResetIssuedAt_DESC
+    passwordResetRedeemedAt_ASC
+    passwordResetRedeemedAt_DESC
     totalScore_ASC
     totalScore_DESC
+    votedOnOptions_ASC
+    votedOnOptions_DESC
+    votedOnQuestions_ASC
+    votedOnQuestions_DESC
+    votedOnQuizzes_ASC
+    votedOnQuizzes_DESC
 }
 
 input CreateInitialUserInput {
@@ -438,6 +535,7 @@ input CreateInitialUserInput {
 input OptionCreateInput {
     content: String
     question: QuestionRelateToManyInput
+    usersVoted: UserRelateToManyInput
     votes: Int
 }
 
@@ -451,6 +549,7 @@ input OptionRelateToManyInput {
 input OptionUpdateInput {
     content: String
     question: QuestionRelateToManyInput
+    usersVoted: UserRelateToManyInput
     votes: Int
 }
 
@@ -485,6 +584,12 @@ input OptionWhereInput {
     question_none: QuestionWhereInput
     " condition must be true for at least 1 node "
     question_some: QuestionWhereInput
+    " condition must be true for all nodes "
+    usersVoted_every: UserWhereInput
+    " condition must be false for all nodes "
+    usersVoted_none: UserWhereInput
+    " condition must be true for at least 1 node "
+    usersVoted_some: UserWhereInput
     votes: Int
     votes_gt: Int
     votes_gte: Int
@@ -512,6 +617,7 @@ input QuestionCreateInput {
     content: String
     option: OptionRelateToManyInput
     quiz: QuizRelateToManyInput
+    usersVoted: UserRelateToManyInput
     votes: Int
 }
 
@@ -526,6 +632,7 @@ input QuestionUpdateInput {
     content: String
     option: OptionRelateToManyInput
     quiz: QuizRelateToManyInput
+    usersVoted: UserRelateToManyInput
     votes: Int
 }
 
@@ -566,6 +673,12 @@ input QuestionWhereInput {
     quiz_none: QuizWhereInput
     " condition must be true for at least 1 node "
     quiz_some: QuizWhereInput
+    " condition must be true for all nodes "
+    usersVoted_every: UserWhereInput
+    " condition must be false for all nodes "
+    usersVoted_none: UserWhereInput
+    " condition must be true for at least 1 node "
+    usersVoted_some: UserWhereInput
     votes: Int
     votes_gt: Int
     votes_gte: Int
@@ -592,6 +705,7 @@ input QuestionsUpdateInput {
 input QuizCreateInput {
     question: QuestionRelateToManyInput
     subject: String
+    usersVoted: UserRelateToManyInput
     votes: Int
     week: String
 }
@@ -606,6 +720,7 @@ input QuizRelateToManyInput {
 input QuizUpdateInput {
     question: QuestionRelateToManyInput
     subject: String
+    usersVoted: UserRelateToManyInput
     votes: Int
     week: String
 }
@@ -641,6 +756,12 @@ input QuizWhereInput {
     subject_not_starts_with_i: String
     subject_starts_with: String
     subject_starts_with_i: String
+    " condition must be true for all nodes "
+    usersVoted_every: UserWhereInput
+    " condition must be false for all nodes "
+    usersVoted_none: UserWhereInput
+    " condition must be true for at least 1 node "
+    usersVoted_some: UserWhereInput
     votes: Int
     votes_gt: Int
     votes_gte: Int
@@ -672,12 +793,73 @@ input QuizzesUpdateInput {
     id: ID!
 }
 
+input TriviaStateCreateInput {
+    status: String
+}
+
+input TriviaStateUpdateInput {
+    status: String
+}
+
+input TriviaStateWhereInput {
+    AND: [TriviaStateWhereInput]
+    OR: [TriviaStateWhereInput]
+    id: ID
+    id_in: [ID]
+    id_not: ID
+    id_not_in: [ID]
+    status: String
+    status_contains: String
+    status_contains_i: String
+    status_ends_with: String
+    status_ends_with_i: String
+    status_i: String
+    status_in: [String]
+    status_not: String
+    status_not_contains: String
+    status_not_contains_i: String
+    status_not_ends_with: String
+    status_not_ends_with_i: String
+    status_not_i: String
+    status_not_in: [String]
+    status_not_starts_with: String
+    status_not_starts_with_i: String
+    status_starts_with: String
+    status_starts_with_i: String
+}
+
+input TriviaStateWhereUniqueInput {
+    id: ID!
+}
+
+input TriviaStatesCreateInput {
+    data: TriviaStateCreateInput
+}
+
+input TriviaStatesUpdateInput {
+    data: TriviaStateUpdateInput
+    id: ID!
+}
+
 input UserCreateInput {
     currentWeekScore: Int
     email: String
     name: String
     password: String
+    passwordResetIssuedAt: String
+    passwordResetRedeemedAt: String
+    passwordResetToken: String
     totalScore: Int
+    votedOnOptions: OptionRelateToManyInput
+    votedOnQuestions: QuestionRelateToManyInput
+    votedOnQuizzes: QuizRelateToManyInput
+}
+
+input UserRelateToManyInput {
+    connect: [UserWhereUniqueInput]
+    create: [UserCreateInput]
+    disconnect: [UserWhereUniqueInput]
+    disconnectAll: Boolean
 }
 
 input UserUpdateInput {
@@ -685,7 +867,13 @@ input UserUpdateInput {
     email: String
     name: String
     password: String
+    passwordResetIssuedAt: String
+    passwordResetRedeemedAt: String
+    passwordResetToken: String
     totalScore: Int
+    votedOnOptions: OptionRelateToManyInput
+    votedOnQuestions: QuestionRelateToManyInput
+    votedOnQuizzes: QuizRelateToManyInput
 }
 
 input UserWhereInput {
@@ -739,6 +927,23 @@ input UserWhereInput {
     name_not_starts_with_i: String
     name_starts_with: String
     name_starts_with_i: String
+    passwordResetIssuedAt: String
+    passwordResetIssuedAt_gt: String
+    passwordResetIssuedAt_gte: String
+    passwordResetIssuedAt_in: [String]
+    passwordResetIssuedAt_lt: String
+    passwordResetIssuedAt_lte: String
+    passwordResetIssuedAt_not: String
+    passwordResetIssuedAt_not_in: [String]
+    passwordResetRedeemedAt: String
+    passwordResetRedeemedAt_gt: String
+    passwordResetRedeemedAt_gte: String
+    passwordResetRedeemedAt_in: [String]
+    passwordResetRedeemedAt_lt: String
+    passwordResetRedeemedAt_lte: String
+    passwordResetRedeemedAt_not: String
+    passwordResetRedeemedAt_not_in: [String]
+    passwordResetToken_is_set: Boolean
     password_is_set: Boolean
     totalScore: Int
     totalScore_gt: Int
@@ -748,6 +953,24 @@ input UserWhereInput {
     totalScore_lte: Int
     totalScore_not: Int
     totalScore_not_in: [Int]
+    " condition must be true for all nodes "
+    votedOnOptions_every: OptionWhereInput
+    " condition must be false for all nodes "
+    votedOnOptions_none: OptionWhereInput
+    " condition must be true for at least 1 node "
+    votedOnOptions_some: OptionWhereInput
+    " condition must be true for all nodes "
+    votedOnQuestions_every: QuestionWhereInput
+    " condition must be false for all nodes "
+    votedOnQuestions_none: QuestionWhereInput
+    " condition must be true for at least 1 node "
+    votedOnQuestions_some: QuestionWhereInput
+    " condition must be true for all nodes "
+    votedOnQuizzes_every: QuizWhereInput
+    " condition must be false for all nodes "
+    votedOnQuizzes_none: QuizWhereInput
+    " condition must be true for at least 1 node "
+    votedOnQuizzes_some: QuizWhereInput
 }
 
 input UserWhereUniqueInput {

@@ -12,6 +12,15 @@ export const CURRENT_USER_QUERY = gql`
   }
 `;
 
+export const CURRENT_TRIVIA_STATE = gql`
+  query CURRENT_TRIVIA_STATE {
+    allTriviaStates(first: 1) {
+      id
+      status
+    }
+  }
+`;
+
 export const ALL_QUIZZES_QUERY = gql`
   query ALL_QUIZZES_QUERY($skip: Int = 0, $first: Int) {
     allQuizzes(first: $first, skip: $skip, sortBy: [votes_DESC]) {

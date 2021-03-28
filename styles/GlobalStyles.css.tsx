@@ -19,6 +19,7 @@ export const GlobalStyles = createGlobalStyle`
     --itemBackgroundColor: white;
     --fontColor: black;
     --white: white;
+    --lightGrey: #e1e1e1;
     --boxShadow: 0 3px 3px rgba(0, 0, 0, 0.2);
     
     font-size: calc(12px + 0.2vw);
@@ -29,6 +30,7 @@ export const GlobalStyles = createGlobalStyle`
       --backgroundColor: #23272A;
       --itemBackgroundColor: #2C2F33;
       --fontColor: white;
+      --lightGrey: #e1e1e1;
       --boxShadow: 0 3px 3px rgba(255, 255, 255, 0.2);
     }
   }

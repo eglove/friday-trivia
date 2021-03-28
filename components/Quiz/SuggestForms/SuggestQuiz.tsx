@@ -6,7 +6,10 @@ import {
   SuggestionButtonGrid,
 } from '../../../styles/QuizStyles';
 import { SUGGEST_SUBJECT_MUTATION } from '../../../graphql/mutations';
-import { ALL_QUIZZES_QUERY } from '../../../graphql/queries';
+import {
+  ALL_QUIZZES_QUERY,
+  TOTAL_QUIZZES_QUERY,
+} from '../../../graphql/queries';
 
 export default function SuggestQuiz(): JSX.Element {
   const { inputs, handleChange, clearForm } = useForm();
@@ -14,7 +17,10 @@ export default function SuggestQuiz(): JSX.Element {
     SUGGEST_SUBJECT_MUTATION,
     {
       variables: inputs,
-      refetchQueries: [{ query: ALL_QUIZZES_QUERY }],
+      refetchQueries: [
+        { query: ALL_QUIZZES_QUERY },
+        { query: TOTAL_QUIZZES_QUERY },
+      ],
     }
   );
 

@@ -13,20 +13,11 @@ export const NavStyles = styled.nav`
     color: var(--fontColor);
     text-decoration: none;
     padding: 1rem;
+    cursor: pointer;
   }
 
   a:hover,
   a:focus {
-    text-decoration: underline;
-  }
-
-  .signOutButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  .signOutButton:hover {
     text-decoration: underline;
   }
 `;
