@@ -2,8 +2,8 @@ import { useMutation } from '@apollo/client';
 import { FormEvent } from 'react';
 import { Quiz } from '../../../graphql/objectInterfaces';
 import {
-  SuggestQuizButtonGrid,
-  SuggestQuizForm,
+  SuggestionButtonGrid,
+  SuggestionForm,
 } from '../../../styles/QuizStyles';
 import useForm from '../../../lib/useForm';
 import { SUGGEST_QUESTION_MUTATION } from '../../../graphql/mutations';
@@ -34,7 +34,7 @@ export default function SuggestQuestion({
   return (
     <>
       <h2>Suggest Questions for {quiz.subject}</h2>
-      <SuggestQuizForm
+      <SuggestionForm
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
           clearForm();
@@ -57,14 +57,14 @@ export default function SuggestQuestion({
               onChange={handleChange}
             />
           </label>
-          <SuggestQuizButtonGrid>
+          <SuggestionButtonGrid>
             <button type="submit">Submit</button>
             <button type="button" onClick={clearForm}>
               Clear
             </button>
-          </SuggestQuizButtonGrid>
+          </SuggestionButtonGrid>
         </fieldset>
-      </SuggestQuizForm>
+      </SuggestionForm>
       <QuestionContainer quizId={quiz.id} questions={quiz.question} />
     </>
   );

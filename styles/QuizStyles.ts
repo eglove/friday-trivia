@@ -41,7 +41,7 @@ export const SuggestButton = styled(ShowHideButton)`
   }
 `;
 
-export const SuggestQuizButtonGrid = styled.div`
+export const SuggestionButtonGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, auto);
   width: min-content;
@@ -59,7 +59,7 @@ export const SuggestQuizButtonGrid = styled.div`
   }
 `;
 
-export const SuggestQuizForm = styled.form`
+export const SuggestionForm = styled.form`
   display: grid;
   margin: 1rem auto 0 auto;
   text-align: center;

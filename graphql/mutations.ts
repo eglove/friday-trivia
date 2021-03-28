@@ -18,6 +18,16 @@ export const SUGGEST_QUESTION_MUTATION = gql`
   }
 `;
 
+export const SUGGEST_OPTION_MUTATION = gql`
+  mutation SUGGEST_OPTION_MUTATION($questionId: ID!, $content: String!) {
+    createOption(
+      data: { content: $content, question: { connect: { id: $questionId } } }
+    ) {
+      id
+    }
+  }
+`;
+
 export const VOTE_ON_QUIZ = gql`
   mutation VOTE_ON_QUIZ($id: ID!, $votes: Int) {
     updateQuiz(id: $id, data: { votes: $votes }) {

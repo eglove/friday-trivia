@@ -39,3 +39,18 @@ export const SINGLE_QUIZ_QUERY = gql`
     }
   }
 `;
+
+export const SINGLE_QUESTION_QUERY = gql`
+  query SINGLE_QUESTION_QUERY($id: ID!) {
+    Question(where: { id: $id }) {
+      id
+      content
+      votes
+      option(sortBy: [votes_DESC]) {
+        id
+        content
+        votes
+      }
+    }
+  }
+`;
