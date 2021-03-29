@@ -13,7 +13,6 @@ export enum TriviaStatuses {
 
 // @ts-ignore
 const LocalStateContext = createContext();
-
 const LocalStateProvider = LocalStateContext.Provider;
 
 function TriviaStatusProvider({ children }: any): JSX.Element {
@@ -31,8 +30,8 @@ function TriviaStatusProvider({ children }: any): JSX.Element {
   );
 }
 
-function triviaStatusConsumer(): ILocalStateContext {
+function TriviaStatusConsumer(): ILocalStateContext {
   return useContext(LocalStateContext) as ILocalStateContext;
 }
 
-export { TriviaStatusProvider, triviaStatusConsumer };
+export { TriviaStatusProvider, TriviaStatusConsumer };

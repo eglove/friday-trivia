@@ -1,8 +1,8 @@
 import Voting from '../components/Quiz/Voting';
-import { triviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
+import { TriviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
 
 export default function Index(): JSX.Element {
-  const { triviaStatus } = triviaStatusConsumer();
+  const { triviaStatus } = TriviaStatusConsumer();
 
   switch (triviaStatus) {
     case TriviaStatuses.voting: {
