@@ -1,13 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const UPDATE_TRIVIA_STATUS_MUTATION = gql`
-  mutation UPDATE_TRIVIA_STATUS_MUTATION($id: ID!, $status: String!) {
-    updateTriviaState(id: $id, data: { status: $status }) {
-      id
-    }
-  }
-`;
-
 export const LOGIN_MUTATION = gql`
   mutation LOGIN_MUTATION($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {

@@ -25,7 +25,9 @@ export default function QuizPagination({
   return (
     <PaginationStyles>
       <Head>
-        <title>Friday Trivia | Voting Page {currentPage} of ___</title>
+        <title>
+          Friday Trivia | Voting Page {currentPage} of {pageCount}
+        </title>
       </Head>
       <Link href={`/voting/${currentPage - 1}`}>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

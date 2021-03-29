@@ -1,22 +1,21 @@
-import { useQuery } from '@apollo/client';
 import Voting from '../components/Quiz/Voting';
-import { CURRENT_TRIVIA_STATE } from '../graphql/queries';
-import { TriviaStatuses } from '../util/updateTriviaState';
+import { triviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
 
 export default function Index(): JSX.Element {
-  const { data, loading, error } = useQuery(CURRENT_TRIVIA_STATE);
+  const { triviaStatus } = triviaStatusConsumer();
 
-  if (loading) return <p>Loading...</p>;
-
-  if (error) return <p>Error! {error.message}</p>;
-
-  const { status } = data.allTriviaStates[0];
-
-  if (status === TriviaStatuses.voting) return <Voting />;
-
-  if (status === TriviaStatuses.trivia) return <p>Trivia</p>;
-
-  if (status === TriviaStatuses.results) return <p>Results</p>;
-
-  return <p>Hmm...</p>;
+  switch (triviaStatus) {
+    case TriviaStatuses.voting: {
+      return <Voting />;
+    }
+    case TriviaStatuses.trivia: {
+      return <p>Trivia</p>;
+    }
+    case TriviaStatuses.results: {
+      return <p>Results</p>;
+    }
+    default: {
+      return <p>Hmm..</p>;
+    }
+  }
 }

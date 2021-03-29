@@ -6,6 +6,7 @@ import { ApolloClient, ApolloProvider } from '@apollo/client';
 import Page from '../components/Page';
 import '../styles/nprogress.css';
 import withData from '../lib/withData';
+import { TriviaStatusProvider } from '../lib/triviaStatus';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -22,15 +23,17 @@ function App({
 }: PagePropsWithApollo): JSX.Element {
   return (
     <ApolloProvider client={apollo}>
-      <Page>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-      </Page>
+      <TriviaStatusProvider>
+        <Page>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </Page>
+      </TriviaStatusProvider>
     </ApolloProvider>
   );
 }
 
-// Glue code for Apollo -> Nextjs
+// Glue code for Apollo -> NextJs
 // @ts-ignore
 App.getInitialProps = async function ({ Component, ctx }): Promise<Object> {
   let pageProps = {

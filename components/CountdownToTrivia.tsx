@@ -4,10 +4,11 @@ import {
   secondsToString,
   timeUntilTriviaString,
 } from '../util/times';
-import { TriviaStatuses, updateTriviaStatus } from '../util/updateTriviaState';
+import { triviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
 
 export default function CountdownToTrivia(): JSX.Element {
   const controller = new AbortController();
+  const { triviaStatusSet } = triviaStatusConsumer();
 
   const [fridayTimer, setFridayTimer] = useState(timeUntilTriviaString);
 
@@ -15,8 +16,8 @@ export default function CountdownToTrivia(): JSX.Element {
     animationInterval(1000, controller.signal, (): void => {
       setFridayTimer(timeUntilTriviaString);
     });
-  } else {
-    updateTriviaStatus(TriviaStatuses.trivia);
+  } else if (typeof window !== 'undefined') {
+    triviaStatusSet(TriviaStatuses.trivia);
   }
 
   return (

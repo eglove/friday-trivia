@@ -9,8 +9,5 @@ export function getCurrentUser(): ApolloQueryResult<any> {
 export function isCurrentUser(): boolean {
   const { data } = useQuery(CURRENT_USER_QUERY);
 
-  if (data?.authenicatedItem) {
-    return true;
-  }
-  return false;
+  return !!data?.authenicatedItem;
 }

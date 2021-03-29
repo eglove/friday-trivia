@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Head from 'next/head';
 import { ALL_QUIZZES_QUERY } from '../../graphql/queries';
 import { Quiz } from '../../graphql/objectInterfaces';
 import { QuizContainerStyles } from '../../styles/QuizStyles';
@@ -30,9 +29,6 @@ export default function QuizContainer({
 
   return (
     <>
-      <Head>
-        <title>Friday Trivia | Voting</title>
-      </Head>
       {allQuizzes &&
         allQuizzes.map((quiz: Quiz) => (
           <QuizContainerStyles key={quiz.id}>
