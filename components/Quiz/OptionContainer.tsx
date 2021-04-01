@@ -34,7 +34,11 @@ export default function OptionContainer({
         {options.map((option: Option) => (
           <ColumnGrid columns={2} key={option.id}>
             <li>{option.content}</li>
-            <UpdateOption voteId={option.id} votes={option.votes} />
+            <UpdateOption
+              voteId={option.id}
+              votes={option.votes}
+              usersVoted={option.usersVoted}
+            />
           </ColumnGrid>
         ))}
       </Display>

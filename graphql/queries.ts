@@ -31,10 +31,16 @@ export const ALL_QUIZZES_QUERY = gql`
         id
         content
         votes
+        usersVoted {
+          id
+        }
         option(sortBy: [votes_DESC]) {
           id
           content
           votes
+          usersVoted {
+            id
+          }
         }
       }
       usersVoted {

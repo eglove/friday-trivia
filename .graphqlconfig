@@ -1,5 +1,5 @@
 {
-  "name": "Untitled GraphQL Schema",
+  "name": "Friday Trivia Schema",
   "schemaPath": "schema.graphql",
   "extensions": {
     "endpoints": {
@@ -8,7 +8,7 @@
         "headers": {
           "user-agent": "JS GraphQL"
         },
-        "introspect": false
+        "introspect": true
       }
     }
   }

@@ -100,16 +100,22 @@ export const VOTE_ON_QUIZ = gql`
 `;
 
 export const VOTE_ON_QUESTION = gql`
-  mutation VOTE_ON_QUESTION($id: ID!, $votes: Int) {
-    updateQuestion(id: $id, data: { votes: $votes }) {
+  mutation VOTE_ON_QUESTION($questionId: ID!, $userId: ID!, $votes: Int) {
+    updateQuestion(
+      id: $questionId
+      data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
+    ) {
       id
     }
   }
 `;
 
 export const VOTE_ON_OPTION = gql`
-  mutation VOTE_ON_OPTION($id: ID!, $votes: Int) {
-    updateOption(id: $id, data: { votes: $votes }) {
+  mutation VOTE_ON_OPTION($optionId: ID!, $userId: ID!, $votes: Int) {
+    updateOption(
+      id: $optionId
+      data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
+    ) {
       id
     }
   }

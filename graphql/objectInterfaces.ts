@@ -11,6 +11,7 @@ export interface Question {
   content: string;
   votes: number;
   option: Array<Option>;
+  usersVoted: Array<User>;
 }
 
 export interface User {
@@ -26,6 +27,7 @@ export interface Option {
   id: string;
   content: string;
   votes: number;
+  usersVoted: Array<User>;
 }
 
 export interface Vote {

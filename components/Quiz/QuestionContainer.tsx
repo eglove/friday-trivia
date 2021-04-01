@@ -37,7 +37,11 @@ export default function QuestionContainer({
           <div key={question.id}>
             <ColumnGrid columns={2} className="question">
               <div>{question.content}</div>
-              <UpdateQuestion voteId={question.id} votes={question.votes} />
+              <UpdateQuestion
+                usersVoted={question.usersVoted}
+                voteId={question.id}
+                votes={question.votes}
+              />
             </ColumnGrid>
             <OptionContainer
               questionId={question.id}
