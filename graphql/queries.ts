@@ -7,6 +7,15 @@ export const CURRENT_USER_QUERY = gql`
         id
         email
         name
+        votedOnQuizzes {
+          id
+        }
+        votedOnQuestions {
+          id
+        }
+        votedOnOptions {
+          id
+        }
       }
     }
   }
@@ -27,6 +36,9 @@ export const ALL_QUIZZES_QUERY = gql`
           content
           votes
         }
+      }
+      usersVoted {
+        id
       }
     }
   }

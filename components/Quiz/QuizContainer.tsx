@@ -34,7 +34,11 @@ export default function QuizContainer({
           <QuizContainerStyles key={quiz.id}>
             <ColumnGrid columns={2}>
               <div className="subject">{quiz.subject}</div>
-              <UpdateQuiz voteId={quiz.id} votes={quiz.votes} />
+              <UpdateQuiz
+                voteId={quiz.id}
+                votes={quiz.votes}
+                usersVoted={quiz.usersVoted}
+              />
             </ColumnGrid>
             <QuestionContainer quizId={quiz.id} questions={quiz.question} />
           </QuizContainerStyles>

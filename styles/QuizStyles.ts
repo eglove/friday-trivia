@@ -27,6 +27,10 @@ export const VoteButton = styled.button`
   :hover {
     cursor: pointer;
   }
+
+  :disabled {
+    cursor: default;
+  }
 `;
 
 export const ShowHideButton = styled(VoteButton)`

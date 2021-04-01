@@ -89,9 +89,15 @@ export const SUGGEST_OPTION_MUTATION = gql`
 `;
 
 export const VOTE_ON_QUIZ = gql`
-  mutation VOTE_ON_QUIZ($id: ID!, $votes: Int) {
-    updateQuiz(id: $id, data: { votes: $votes }) {
+  mutation VOTE_ON_QUIZ($quizId: ID!, $userId: ID!, $votes: Int) {
+    updateQuiz(
+      id: $quizId
+      data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
+    ) {
       id
+      usersVoted {
+        id
+      }
     }
   }
 `;

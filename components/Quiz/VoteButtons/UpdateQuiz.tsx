@@ -3,10 +3,18 @@ import { VoteButton } from '../../../styles/QuizStyles';
 import { VOTE_ON_QUIZ } from '../../../graphql/mutations';
 import { ALL_QUIZZES_QUERY } from '../../../graphql/queries';
 import { Vote } from '../../../graphql/objectInterfaces';
+import { TriviaStatusConsumer } from '../../../lib/triviaStatus';
 
-export default function UpdateQuiz({ voteId, votes }: Vote): JSX.Element {
+export default function UpdateQuiz({
+  voteId,
+  votes,
+  usersVoted,
+}: Vote): JSX.Element {
+  const { currentUser } = TriviaStatusConsumer();
+
   const inputs = {
-    id: voteId,
+    quizId: voteId,
+    userId: currentUser.id,
     votes: votes + 1,
   };
 
@@ -15,11 +23,18 @@ export default function UpdateQuiz({ voteId, votes }: Vote): JSX.Element {
     refetchQueries: [{ query: ALL_QUIZZES_QUERY }],
   });
 
+  let userHasVoted;
+  usersVoted.forEach(user => {
+    if (user.id === currentUser.id) {
+      userHasVoted = true;
+    }
+  });
+
   return (
     <>
       <VoteButton
-        disabled={loading}
-        aria-disabled={loading}
+        disabled={loading || userHasVoted}
+        aria-disabled={loading || userHasVoted}
         onClick={async (): Promise<void> => {
           await updateQuiz();
         }}

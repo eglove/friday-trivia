@@ -1,8 +1,12 @@
 import { createContext, SetStateAction, useContext, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { CURRENT_USER_QUERY } from '../graphql/queries';
+import { User } from '../graphql/objectInterfaces';
 
 interface ILocalStateContext {
   triviaStatus: string;
   triviaStatusSet: Function;
+  currentUser: User;
 }
 
 export enum TriviaStatuses {
@@ -17,6 +21,8 @@ const LocalStateProvider = LocalStateContext.Provider;
 
 function TriviaStatusProvider({ children }: any): JSX.Element {
   const [triviaStatus, setTriviaStatus] = useState('voting');
+  const { data } = useQuery(CURRENT_USER_QUERY);
+  const currentUser = data?.authenticatedItem;
 
   function triviaStatusSet(status: TriviaStatuses): SetStateAction<void> {
     setTriviaStatus(status);
@@ -24,7 +30,7 @@ function TriviaStatusProvider({ children }: any): JSX.Element {
 
   return (
     // @ts-ignore
-    <LocalStateProvider value={{ triviaStatus, triviaStatusSet }}>
+    <LocalStateProvider value={{ triviaStatus, triviaStatusSet, currentUser }}>
       {children}
     </LocalStateProvider>
   );
