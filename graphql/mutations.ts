@@ -95,9 +95,6 @@ export const VOTE_ON_QUIZ = gql`
       data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
     ) {
       id
-      usersVoted {
-        id
-      }
     }
   }
 `;
