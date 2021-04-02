@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { Option } from '../../graphql/objectInterfaces';
 import { ColumnGrid, Display, FlexStyles } from '../../styles/MainStyles';
 import UpdateOption from './VoteButtons/UpdateOption';
-import { ShowHideButton, SuggestButton } from '../../styles/QuizStyles';
+import {
+  ShowHideButton,
+  SuggestButton,
+  LiCapitalize,
+} from '../../styles/QuizStyles';
 
 interface IOptionContainer {
   options: Array<Option>;
@@ -33,7 +37,7 @@ export default function OptionContainer({
       <Display display={displayOption}>
         {options.map((option: Option) => (
           <ColumnGrid columns={2} key={option.id}>
-            <li>{option.content}</li>
+            <LiCapitalize>{option.content}</LiCapitalize>
             <UpdateOption
               voteId={option.id}
               votes={option.votes}

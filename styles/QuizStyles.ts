@@ -17,6 +17,14 @@ export const QuizContainerStyles = styled(ContentVisibility)`
   }
 `;
 
+export const Capitalize = styled.div`
+  text-transform: capitalize;
+`;
+
+export const LiCapitalize = styled.li`
+  text-transform: capitalize;
+`;
+
 export const VoteButton = styled.button`
   background: none;
   border: 1px solid black;
