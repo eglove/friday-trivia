@@ -18,6 +18,8 @@ export interface User {
   email: string;
   id: string;
   name: string;
+  totalScore: number;
+  currentWeekScore: number;
   votedOnOptions: Array<Option>;
   votedOnQuestions: Array<Question>;
   votedOnQuizzes: Array<Quiz>;

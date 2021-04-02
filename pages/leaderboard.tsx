@@ -1,7 +1,5 @@
-export default function Leaderboard(): JSX.Element {
-  return (
-    <div>
-      <p>leaderboard</p>
-    </div>
-  );
+import Leaderboard from '../components/Leaderboard/Leaderboard';
+
+export default function LeaderboardPage(): JSX.Element {
+  return <Leaderboard />;
 }

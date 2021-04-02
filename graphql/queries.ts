@@ -21,6 +21,17 @@ export const CURRENT_USER_QUERY = gql`
   }
 `;
 
+export const USER_SCORES_QUERY = gql`
+  query USER_SCORES_QUERY {
+    allUsers(sortBy: [totalScore_DESC]) {
+      id
+      name
+      totalScore
+      currentWeekScore
+    }
+  }
+`;
+
 export const ALL_QUIZZES_QUERY = gql`
   query ALL_QUIZZES_QUERY($skip: Int = 0, $first: Int) {
     allQuizzes(first: $first, skip: $skip, sortBy: [votes_DESC]) {
@@ -60,10 +71,16 @@ export const SINGLE_QUIZ_QUERY = gql`
         id
         content
         votes
+        usersVoted {
+          id
+        }
         option(sortBy: [votes_DESC]) {
           id
           content
           votes
+          usersVoted {
+            id
+          }
         }
       }
     }

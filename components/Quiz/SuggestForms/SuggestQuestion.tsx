@@ -42,6 +42,7 @@ export default function SuggestQuestion({
       <SuggestionFormStyles
         onSubmit={async (event: FormEvent<HTMLFormElement>): Promise<void> => {
           event.preventDefault();
+          inputs.content = inputs.content.toLowerCase();
           clearForm();
           await createQuestion();
         }}
