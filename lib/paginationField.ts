@@ -6,7 +6,8 @@ export default function paginationField(): FieldPolicy {
   return {
     keyArgs: false, // tells apollo we will take care of everything
     read(existing = [], { args, cache }: any) {
-      const { skip, first } = args;
+
+      const {first, skip} = args;
 
       // Read the number of items on the page from the cache
       const data = cache.readQuery({ query: TOTAL_QUIZZES_QUERY });

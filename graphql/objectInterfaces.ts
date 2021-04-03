@@ -2,6 +2,7 @@ export interface Quiz {
   id: string;
   subject: string;
   votes: number;
+  numberOfQuestions: number;
   question: Array<Question>;
   usersVoted: Array<User>;
 }

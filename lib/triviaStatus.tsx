@@ -20,7 +20,7 @@ const LocalStateContext = createContext();
 const LocalStateProvider = LocalStateContext.Provider;
 
 function TriviaStatusProvider({ children }: any): JSX.Element {
-  const [triviaStatus, setTriviaStatus] = useState('voting');
+  const [triviaStatus, setTriviaStatus] = useState(TriviaStatuses.trivia);
   const { data } = useQuery(CURRENT_USER_QUERY);
   const currentUser = data?.authenticatedItem;
 

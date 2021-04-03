@@ -143,6 +143,7 @@ type Option {
     content: String
     id: ID!
     question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    userCreated: User
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
 }
@@ -202,8 +203,10 @@ type Question {
     _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
+    numberOfOptions: Int
     option(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
     quiz(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
+    userCreated: User
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
 }
@@ -213,8 +216,10 @@ type Quiz {
     _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     id: ID!
+    numberOfQuestions: Int
     question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
     subject: String
+    userCreated: User
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
     week: String
@@ -244,6 +249,9 @@ type SendUserPasswordResetLinkResult {
 
 " A keystone list "
 type User {
+    _optionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
+    _questionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
+    _quizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
     _votedOnOptionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
     _votedOnQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _votedOnQuizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
@@ -251,10 +259,13 @@ type User {
     email: String
     id: ID!
     name: String
+    options(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
     passwordResetIssuedAt: String
     passwordResetRedeemedAt: String
     passwordResetToken_is_set: Boolean
     password_is_set: Boolean
+    questions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    quizzes(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
     role: Role
     totalScore: Int
     votedOnOptions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
@@ -467,6 +478,8 @@ enum SortOptionsBy {
     id_DESC
     question_ASC
     question_DESC
+    userCreated_ASC
+    userCreated_DESC
     usersVoted_ASC
     usersVoted_DESC
     votes_ASC
@@ -478,10 +491,14 @@ enum SortQuestionsBy {
     content_DESC
     id_ASC
     id_DESC
+    numberOfOptions_ASC
+    numberOfOptions_DESC
     option_ASC
     option_DESC
     quiz_ASC
     quiz_DESC
+    userCreated_ASC
+    userCreated_DESC
     usersVoted_ASC
     usersVoted_DESC
     votes_ASC
@@ -491,10 +508,14 @@ enum SortQuestionsBy {
 enum SortQuizzesBy {
     id_ASC
     id_DESC
+    numberOfQuestions_ASC
+    numberOfQuestions_DESC
     question_ASC
     question_DESC
     subject_ASC
     subject_DESC
+    userCreated_ASC
+    userCreated_DESC
     usersVoted_ASC
     usersVoted_DESC
     votes_ASC
@@ -529,10 +550,16 @@ enum SortUsersBy {
     id_DESC
     name_ASC
     name_DESC
+    options_ASC
+    options_DESC
     passwordResetIssuedAt_ASC
     passwordResetIssuedAt_DESC
     passwordResetRedeemedAt_ASC
     passwordResetRedeemedAt_DESC
+    questions_ASC
+    questions_DESC
+    quizzes_ASC
+    quizzes_DESC
     role_ASC
     role_DESC
     totalScore_ASC
@@ -554,6 +581,7 @@ input CreateInitialUserInput {
 input OptionCreateInput {
     content: String
     question: QuestionRelateToManyInput
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -568,6 +596,7 @@ input OptionRelateToManyInput {
 input OptionUpdateInput {
     content: String
     question: QuestionRelateToManyInput
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -603,6 +632,8 @@ input OptionWhereInput {
     question_none: QuestionWhereInput
     " condition must be true for at least 1 node "
     question_some: QuestionWhereInput
+    userCreated: UserWhereInput
+    userCreated_is_null: Boolean
     " condition must be true for all nodes "
     usersVoted_every: UserWhereInput
     " condition must be false for all nodes "
@@ -634,8 +665,10 @@ input OptionsUpdateInput {
 
 input QuestionCreateInput {
     content: String
+    numberOfOptions: Int
     option: OptionRelateToManyInput
     quiz: QuizRelateToManyInput
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -649,8 +682,10 @@ input QuestionRelateToManyInput {
 
 input QuestionUpdateInput {
     content: String
+    numberOfOptions: Int
     option: OptionRelateToManyInput
     quiz: QuizRelateToManyInput
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -680,6 +715,14 @@ input QuestionWhereInput {
     id_in: [ID]
     id_not: ID
     id_not_in: [ID]
+    numberOfOptions: Int
+    numberOfOptions_gt: Int
+    numberOfOptions_gte: Int
+    numberOfOptions_in: [Int]
+    numberOfOptions_lt: Int
+    numberOfOptions_lte: Int
+    numberOfOptions_not: Int
+    numberOfOptions_not_in: [Int]
     " condition must be true for all nodes "
     option_every: OptionWhereInput
     " condition must be false for all nodes "
@@ -692,6 +735,8 @@ input QuestionWhereInput {
     quiz_none: QuizWhereInput
     " condition must be true for at least 1 node "
     quiz_some: QuizWhereInput
+    userCreated: UserWhereInput
+    userCreated_is_null: Boolean
     " condition must be true for all nodes "
     usersVoted_every: UserWhereInput
     " condition must be false for all nodes "
@@ -722,8 +767,10 @@ input QuestionsUpdateInput {
 }
 
 input QuizCreateInput {
+    numberOfQuestions: Int
     question: QuestionRelateToManyInput
     subject: String
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
     week: String
@@ -737,8 +784,10 @@ input QuizRelateToManyInput {
 }
 
 input QuizUpdateInput {
+    numberOfQuestions: Int
     question: QuestionRelateToManyInput
     subject: String
+    userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
     week: String
@@ -751,6 +800,14 @@ input QuizWhereInput {
     id_in: [ID]
     id_not: ID
     id_not_in: [ID]
+    numberOfQuestions: Int
+    numberOfQuestions_gt: Int
+    numberOfQuestions_gte: Int
+    numberOfQuestions_in: [Int]
+    numberOfQuestions_lt: Int
+    numberOfQuestions_lte: Int
+    numberOfQuestions_not: Int
+    numberOfQuestions_not_in: [Int]
     " condition must be true for all nodes "
     question_every: QuestionWhereInput
     " condition must be false for all nodes "
@@ -775,6 +832,8 @@ input QuizWhereInput {
     subject_not_starts_with_i: String
     subject_starts_with: String
     subject_starts_with_i: String
+    userCreated: UserWhereInput
+    userCreated_is_null: Boolean
     " condition must be true for all nodes "
     usersVoted_every: UserWhereInput
     " condition must be false for all nodes "
@@ -895,10 +954,13 @@ input UserCreateInput {
     currentWeekScore: Int
     email: String
     name: String
+    options: OptionRelateToManyInput
     password: String
     passwordResetIssuedAt: String
     passwordResetRedeemedAt: String
     passwordResetToken: String
+    questions: QuestionRelateToManyInput
+    quizzes: QuizRelateToManyInput
     role: RoleRelateToOneInput
     totalScore: Int
     votedOnOptions: OptionRelateToManyInput
@@ -913,14 +975,24 @@ input UserRelateToManyInput {
     disconnectAll: Boolean
 }
 
+input UserRelateToOneInput {
+    connect: UserWhereUniqueInput
+    create: UserCreateInput
+    disconnect: UserWhereUniqueInput
+    disconnectAll: Boolean
+}
+
 input UserUpdateInput {
     currentWeekScore: Int
     email: String
     name: String
+    options: OptionRelateToManyInput
     password: String
     passwordResetIssuedAt: String
     passwordResetRedeemedAt: String
     passwordResetToken: String
+    questions: QuestionRelateToManyInput
+    quizzes: QuizRelateToManyInput
     role: RoleRelateToOneInput
     totalScore: Int
     votedOnOptions: OptionRelateToManyInput
@@ -979,6 +1051,12 @@ input UserWhereInput {
     name_not_starts_with_i: String
     name_starts_with: String
     name_starts_with_i: String
+    " condition must be true for all nodes "
+    options_every: OptionWhereInput
+    " condition must be false for all nodes "
+    options_none: OptionWhereInput
+    " condition must be true for at least 1 node "
+    options_some: OptionWhereInput
     passwordResetIssuedAt: String
     passwordResetIssuedAt_gt: String
     passwordResetIssuedAt_gte: String
@@ -997,6 +1075,18 @@ input UserWhereInput {
     passwordResetRedeemedAt_not_in: [String]
     passwordResetToken_is_set: Boolean
     password_is_set: Boolean
+    " condition must be true for all nodes "
+    questions_every: QuestionWhereInput
+    " condition must be false for all nodes "
+    questions_none: QuestionWhereInput
+    " condition must be true for at least 1 node "
+    questions_some: QuestionWhereInput
+    " condition must be true for all nodes "
+    quizzes_every: QuizWhereInput
+    " condition must be false for all nodes "
+    quizzes_none: QuizWhereInput
+    " condition must be true for at least 1 node "
+    quizzes_some: QuizWhereInput
     role: RoleWhereInput
     role_is_null: Boolean
     totalScore: Int

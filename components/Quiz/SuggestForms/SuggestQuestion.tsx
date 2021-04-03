@@ -26,12 +26,15 @@ export default function SuggestQuestion({
       variables: {
         content: inputs.content,
         quizId: quiz.id,
+        numberOfQuestions: quiz.numberOfQuestions + 1,
       },
       refetchQueries: [
         { query: SINGLE_QUIZ_QUERY, variables: { id: quiz.id } },
       ],
     }
   );
+
+  console.log(quiz);
 
   return (
     <MainPageStyles>

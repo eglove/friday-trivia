@@ -38,6 +38,7 @@ export const ALL_QUIZZES_QUERY = gql`
       id
       subject
       votes
+      numberOfQuestions
       question(sortBy: [votes_DESC]) {
         id
         content
@@ -67,6 +68,7 @@ export const SINGLE_QUIZ_QUERY = gql`
       id
       subject
       votes
+      numberOfQuestions
       question(sortBy: [votes_DESC]) {
         id
         content
@@ -109,6 +111,33 @@ export const TOTAL_QUIZZES_QUERY = gql`
   query TOTAL_QUIZZES_QUERY {
     _allQuizzesMeta {
       count
+    }
+  }
+`;
+
+export const TOP_VOTED_VALID_QUIZ_QUERY = gql`
+  query TOP_VOTED_VALID_QUIZ_QUERY {
+    allQuizzes(
+      first: 1
+      skip: 0
+      sortBy: [votes_DESC]
+      where: { numberOfQuestions_gte: 10 }
+    ) {
+      id
+      subject
+      numberOfQuestions
+      question(
+        first: 10
+        sortBy: [votes_DESC]
+        where: { numberOfOptions_gte: 4 }
+      ) {
+        id
+        content
+        option(first: 4, sortBy: [votes_DESC]) {
+          id
+          content
+        }
+      }
     }
   }
 `;
