@@ -14,7 +14,7 @@ export default function UpdateQuestion({
 
   const inputs = {
     questionId: voteId,
-    userId: currentUser.id,
+    userId: currentUser?.id,
     votes: votes + 1,
   };
 
@@ -25,7 +25,7 @@ export default function UpdateQuestion({
 
   let userHasVoted;
   usersVoted.forEach(user => {
-    if (user.id === currentUser.id) {
+    if (user.id === currentUser?.id) {
       userHasVoted = true;
     }
   });

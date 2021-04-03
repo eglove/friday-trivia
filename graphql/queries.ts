@@ -97,6 +97,9 @@ export const SINGLE_QUESTION_QUERY = gql`
         id
         content
         votes
+        usersVoted {
+          id
+        }
       }
     }
   }
