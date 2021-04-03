@@ -14,7 +14,11 @@ export default function TriviaQuestions({
       {questions.map((question: Question) => (
         <TriviaQuestionStyles key={question.id}>
           <p>{question.content}</p>
-          <TriviaOptions questionId={question.id} options={question.option} />
+          <TriviaOptions
+            questionId={question.id}
+            correctOption={question.correct[0]}
+            incorrectOptions={question.incorrect}
+          />
         </TriviaQuestionStyles>
       ))}
     </>

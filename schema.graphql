@@ -138,11 +138,11 @@ type Mutation {
 
 " A keystone list "
 type Option {
-    _questionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
-    question(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
+    isCorrect: Boolean
+    question: Question
     userCreated: User
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
@@ -199,13 +199,12 @@ type Query {
 " A keystone list "
 type Question {
     _optionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
-    _quizMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
     _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
     numberOfOptions: Int
     option(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
-    quiz(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): [Quiz!]!
+    quiz: Quiz
     userCreated: User
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
@@ -476,6 +475,8 @@ enum SortOptionsBy {
     content_DESC
     id_ASC
     id_DESC
+    isCorrect_ASC
+    isCorrect_DESC
     question_ASC
     question_DESC
     userCreated_ASC
@@ -580,7 +581,8 @@ input CreateInitialUserInput {
 
 input OptionCreateInput {
     content: String
-    question: QuestionRelateToManyInput
+    isCorrect: Boolean
+    question: QuestionRelateToOneInput
     userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
@@ -595,7 +597,8 @@ input OptionRelateToManyInput {
 
 input OptionUpdateInput {
     content: String
-    question: QuestionRelateToManyInput
+    isCorrect: Boolean
+    question: QuestionRelateToOneInput
     userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
@@ -626,12 +629,10 @@ input OptionWhereInput {
     id_in: [ID]
     id_not: ID
     id_not_in: [ID]
-    " condition must be true for all nodes "
-    question_every: QuestionWhereInput
-    " condition must be false for all nodes "
-    question_none: QuestionWhereInput
-    " condition must be true for at least 1 node "
-    question_some: QuestionWhereInput
+    isCorrect: Boolean
+    isCorrect_not: Boolean
+    question: QuestionWhereInput
+    question_is_null: Boolean
     userCreated: UserWhereInput
     userCreated_is_null: Boolean
     " condition must be true for all nodes "
@@ -667,7 +668,7 @@ input QuestionCreateInput {
     content: String
     numberOfOptions: Int
     option: OptionRelateToManyInput
-    quiz: QuizRelateToManyInput
+    quiz: QuizRelateToOneInput
     userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
@@ -680,11 +681,18 @@ input QuestionRelateToManyInput {
     disconnectAll: Boolean
 }
 
+input QuestionRelateToOneInput {
+    connect: QuestionWhereUniqueInput
+    create: QuestionCreateInput
+    disconnect: QuestionWhereUniqueInput
+    disconnectAll: Boolean
+}
+
 input QuestionUpdateInput {
     content: String
     numberOfOptions: Int
     option: OptionRelateToManyInput
-    quiz: QuizRelateToManyInput
+    quiz: QuizRelateToOneInput
     userCreated: UserRelateToOneInput
     usersVoted: UserRelateToManyInput
     votes: Int
@@ -729,12 +737,8 @@ input QuestionWhereInput {
     option_none: OptionWhereInput
     " condition must be true for at least 1 node "
     option_some: OptionWhereInput
-    " condition must be true for all nodes "
-    quiz_every: QuizWhereInput
-    " condition must be false for all nodes "
-    quiz_none: QuizWhereInput
-    " condition must be true for at least 1 node "
-    quiz_some: QuizWhereInput
+    quiz: QuizWhereInput
+    quiz_is_null: Boolean
     userCreated: UserWhereInput
     userCreated_is_null: Boolean
     " condition must be true for all nodes "
@@ -780,6 +784,13 @@ input QuizRelateToManyInput {
     connect: [QuizWhereUniqueInput]
     create: [QuizCreateInput]
     disconnect: [QuizWhereUniqueInput]
+    disconnectAll: Boolean
+}
+
+input QuizRelateToOneInput {
+    connect: QuizWhereUniqueInput
+    create: QuizCreateInput
+    disconnect: QuizWhereUniqueInput
     disconnectAll: Boolean
 }
 

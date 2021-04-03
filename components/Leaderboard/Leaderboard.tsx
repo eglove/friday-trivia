@@ -11,7 +11,6 @@ export default function Leaderboard(): JSX.Element {
 
   if (error) return <p>Error! {error.message}</p>;
 
-  console.log(data.allUsers);
   const { allUsers } = data;
 
   return (

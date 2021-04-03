@@ -87,9 +87,17 @@ export const SUGGEST_QUESTION_MUTATION = gql`
 `;
 
 export const SUGGEST_OPTION_MUTATION = gql`
-  mutation SUGGEST_OPTION_MUTATION($questionId: ID!, $content: String!) {
+  mutation SUGGEST_OPTION_MUTATION(
+    $questionId: ID!
+    $content: String!
+    $isCorrect: Boolean!
+  ) {
     createOption(
-      data: { content: $content, question: { connect: { id: $questionId } } }
+      data: {
+        content: $content
+        isCorrect: $isCorrect
+        question: { connect: { id: $questionId } }
+      }
     ) {
       id
     }

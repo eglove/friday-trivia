@@ -34,8 +34,6 @@ export default function SuggestQuestion({
     }
   );
 
-  console.log(quiz);
-
   return (
     <MainPageStyles>
       <Head>

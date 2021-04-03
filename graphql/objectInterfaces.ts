@@ -11,7 +11,8 @@ export interface Question {
   id: string;
   content: string;
   votes: number;
-  option: Array<Option>;
+  correct: Array<Option>;
+  incorrect: Array<Option>;
   usersVoted: Array<User>;
 }
 

@@ -1,25 +1,34 @@
 import { Option } from '../../graphql/objectInterfaces';
+import { randomizeOptionOrder } from '../../util/util';
 
 interface ITriviaOptions {
   questionId: string;
-  options: Array<Option>;
+  correctOption: Option;
+  incorrectOptions: Array<Option>;
 }
 
 export default function TriviaOptions({
   questionId,
-  options,
+  correctOption,
+  incorrectOptions,
 }: ITriviaOptions): JSX.Element {
+  const randOrder = randomizeOptionOrder(incorrectOptions);
+
   return (
     <>
-      {options.map(option => (
-        <div key={option.id}>
+      {randOrder.map(optionIndex => (
+        <div key={incorrectOptions[optionIndex]?.id ?? correctOption.id}>
           <input
             type="radio"
-            id={option.id}
+            id={incorrectOptions[optionIndex]?.id ?? correctOption.id}
             name={questionId}
-            value={option.content}
+            value={
+              incorrectOptions[optionIndex]?.content ?? correctOption.content
+            }
           />
-          <label htmlFor={questionId}>{option.content}</label>
+          <label htmlFor={questionId}>
+            {incorrectOptions[optionIndex]?.content ?? correctOption.content}
+          </label>
         </div>
       ))}
       <button type="submit">Save Answer</button>

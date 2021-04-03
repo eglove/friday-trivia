@@ -50,6 +50,7 @@ export const ALL_QUIZZES_QUERY = gql`
           id
           content
           votes
+          isCorrect
           usersVoted {
             id
           }
@@ -80,6 +81,7 @@ export const SINGLE_QUIZ_QUERY = gql`
           id
           content
           votes
+          isCorrect
           usersVoted {
             id
           }
@@ -99,6 +101,7 @@ export const SINGLE_QUESTION_QUERY = gql`
         id
         content
         votes
+        isCorrect
         usersVoted {
           id
         }
@@ -133,9 +136,23 @@ export const TOP_VOTED_VALID_QUIZ_QUERY = gql`
       ) {
         id
         content
-        option(first: 4, sortBy: [votes_DESC]) {
+        correct: option(
+          first: 1
+          sortBy: [votes_DESC]
+          where: { isCorrect: true }
+        ) {
           id
           content
+          isCorrect
+        }
+        incorrect: option(
+          first: 3
+          sortBy: [votes_DESC]
+          where: { isCorrect: false }
+        ) {
+          id
+          content
+          isCorrect
         }
       }
     }

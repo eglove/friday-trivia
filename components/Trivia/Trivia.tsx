@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { TOP_VOTED_VALID_QUIZ_QUERY } from '../../graphql/queries';
 import { TriviaStyles } from '../../styles/TrivaStyles';
 import TriviaQuestions from './TriviaQuestions';
+import { validated } from '../../util/util';
 
 export default function Trivia(): JSX.Element {
   const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY);
@@ -12,21 +13,7 @@ export default function Trivia(): JSX.Element {
 
   const trivia = data?.allQuizzes[0];
 
-  const validated = (): boolean => {
-    if (!trivia || trivia.question.length < 10) {
-      return false;
-    }
-
-    for (let i = 0; i < trivia.question.length; i += 1) {
-      if (trivia.question[i].option.length < 4) {
-        return false;
-      }
-    }
-
-    return true;
-  };
-
-  if (validated()) {
+  if (validated(trivia)) {
     return (
       <TriviaStyles>
         <h1>{trivia.subject}</h1>
@@ -43,6 +30,7 @@ export default function Trivia(): JSX.Element {
         <li>1 Subject must be available.</li>
         <li>10 Questions must be available for that subject.</li>
         <li>4 Answers must be available for each question.</li>
+        <li>3 Answers must be incorrect, 1 answer must be correct.</li>
       </ul>
       <p>
         Be sure to suggest trivia subjects, questions and answers during the

@@ -25,6 +25,7 @@ export default function SuggestOption({
     {
       variables: {
         content: inputs.content,
+        isCorrect: inputs.isCorrect === 'true',
         questionId: question.id,
       },
       refetchQueries: [
@@ -61,6 +62,28 @@ export default function SuggestOption({
               cols={50}
               placeholder="24 miles per hour"
               value={inputs.content}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label htmlFor="isCorrect">
+            Correct Answer:
+            <input
+              type="radio"
+              id="isCorrect"
+              name="isCorrect"
+              value="true"
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label htmlFor="isCorrect">
+            Incorrect Answer:
+            <input
+              type="radio"
+              id="isCorrect"
+              name="isCorrect"
+              value="false"
               onChange={handleChange}
             />
           </label>
