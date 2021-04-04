@@ -6,6 +6,12 @@ export const ResultsStyles = styled.div`
   gap: 1rem;
 `;
 
+export const ResultsCountdownStyles = styled.div`
+  display: grid;
+  place-items: center;
+  margin-bottom: 1rem;
+`;
+
 export const UserResultsColumnStyles = styled.div`
   div {
     gap: 1rem;

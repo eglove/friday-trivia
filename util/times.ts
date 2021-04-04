@@ -10,11 +10,9 @@ enum DaysOfWeek {
   'Saturday',
 }
 
-export const daysUntilFriday = (): number => {
-  const days = DaysOfWeek.Friday - new Date().getDay();
+export const daysUntilDayOfWeek = (day: DaysOfWeek): number => {
+  const days = day - new Date().getDay();
 
-  // If today is Saturday, result will be -1 days to Friday
-  // Instead return 7 + -1
   if (days < 0) {
     return 7 + days;
   }
@@ -27,7 +25,9 @@ export const getStartTime = (): Date => {
   // Trivia starts at 9AM friday
   startTime.setHours(9, 0, 0, 0);
   startTime = new Date(
-    startTime.setDate(startTime.getDate() + daysUntilFriday())
+    startTime.setDate(
+      startTime.getDate() + daysUntilDayOfWeek(DaysOfWeek.Friday)
+    )
   );
   return startTime;
 };
@@ -36,8 +36,22 @@ export const getEndTime = (): Date => {
   let endTime = new Date();
   // Trivia ends at 3:30PM friday
   endTime.setHours(15, 30, 0, 0);
-  endTime = new Date(endTime.setDate(endTime.getDate() + daysUntilFriday()));
+  endTime = new Date(
+    endTime.setDate(endTime.getDate() + daysUntilDayOfWeek(DaysOfWeek.Friday))
+  );
   return endTime;
+};
+
+export const getVotingStartTime = (): Date => {
+  let voteStart = new Date();
+  voteStart.setHours(9, 0, 0, 0);
+  voteStart = new Date(
+    voteStart.setDate(
+      voteStart.getDate() + daysUntilDayOfWeek(DaysOfWeek.Monday)
+    )
+  );
+
+  return voteStart;
 };
 
 export const triviaQuestionTimes = (): Array<Date> => {
@@ -65,6 +79,11 @@ export const secondsToString = (seconds: number): string => {
   const numSeconds = (((seconds % 31536000) % 86400) % 3600) % 60;
   return `${numDays} days ${numHours} hours ${numMinutes} minutes ${numSeconds} seconds`;
 };
+
+export const timeUntilToString = (date: Date): string =>
+  secondsToString(
+    Math.floor(date.valueOf() / 1000) - Math.floor(Date.now() / 1000)
+  );
 
 export const timeUntilTriviaString = (): string => {
   const startTime = getStartTime();
