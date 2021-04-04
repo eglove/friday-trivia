@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
   animationInterval,
+  getStartTime,
   secondsToString,
-  timeUntilTriviaString,
+  timeUntilToString,
 } from '../util/times';
 import { TriviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
 import { TimerStyles } from '../styles/MainStyles';
@@ -11,11 +12,13 @@ export default function CountdownToTrivia(): JSX.Element {
   const controller = new AbortController();
   const { triviaStatusSet } = TriviaStatusConsumer();
 
-  const [fridayTimer, setFridayTimer] = useState(timeUntilTriviaString);
+  const [fridayTimer, setFridayTimer] = useState(
+    timeUntilToString(getStartTime())
+  );
 
   if (typeof window !== 'undefined' && fridayTimer !== secondsToString(0)) {
     animationInterval(1000, controller.signal, (): void => {
-      setFridayTimer(timeUntilTriviaString);
+      setFridayTimer(timeUntilToString(getStartTime()));
     });
   } else if (typeof window !== 'undefined') {
     triviaStatusSet(TriviaStatuses.trivia);

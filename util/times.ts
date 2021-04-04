@@ -70,8 +70,6 @@ export const triviaQuestionTimes = (): Array<Date> => {
   return questionTimes;
 };
 
-export const daysToSeconds = (days: number): number => days * 24 * 60 * 60;
-
 export const secondsToString = (seconds: number): string => {
   const numDays = Math.floor((seconds % 31536000) / 86400);
   const numHours = Math.floor(((seconds % 31536000) % 86400) / 3600);
@@ -84,15 +82,6 @@ export const timeUntilToString = (date: Date): string =>
   secondsToString(
     Math.floor(date.valueOf() / 1000) - Math.floor(Date.now() / 1000)
   );
-
-export const timeUntilTriviaString = (): string => {
-  const startTime = getStartTime();
-
-  // Use millisecond values (Unix Timestamp)
-  return secondsToString(
-    Math.floor(startTime.valueOf() / 1000) - Math.floor(Date.now() / 1000)
-  );
-};
 
 export const distanceBetweenTimes = (farDate: Date, nearDate: Date): number =>
   Math.floor(farDate?.valueOf() / 1000) -

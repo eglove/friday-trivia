@@ -13,6 +13,8 @@ export const ResultsCountdownStyles = styled.div`
 `;
 
 export const UserResultsColumnStyles = styled.div`
+  box-shadow: var(--boxShadow);
+
   div {
     gap: 1rem;
     padding: 0.2rem 1rem;
@@ -24,7 +26,12 @@ export const UserResultsColumnStyles = styled.div`
   }
 `;
 
-export const TriviaQAResultsColumnStyles = styled.div`
+export const TriviaQAColumnStyles = styled.div`
+  padding: 0.2rem 1rem;
+  box-shadow: var(--boxShadow);
+`;
+
+export const TriviaQAStyles = styled.div`
   div:nth-child(2) {
     margin-bottom: 1rem;
   }
