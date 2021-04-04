@@ -20,21 +20,30 @@ export default function TriviaOptions({
 }: ITriviaOptions): JSX.Element {
   const randOrder = randomizeOptionOrder(incorrectOptions);
   const { currentUser } = TriviaStatusConsumer();
-  const { handleChange } = useForm();
+  const { inputs, handleChange } = useForm();
   const [updateOption, { loading, error }] = useMutation(
-    ANSWER_QUESTION_MUTATION,
-    {
-      variables: {
-        questionId,
-        userId: currentUser.id,
-      },
-      refetchQueries: [{ query: CURRENT_USER_QUERY }],
-    }
+    ANSWER_QUESTION_MUTATION
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    await updateOption();
+
+    const [answerId, correctId] = inputs.answer.split('...');
+    const answerIsCorrect = answerId === correctId;
+
+    await updateOption({
+      variables: {
+        questionId,
+        userId: currentUser.id,
+        currentWeekScore: answerIsCorrect
+          ? currentUser.currentWeekScore + 1
+          : currentUser.currentWeekScore,
+        totalScore: answerIsCorrect
+          ? currentUser.totalScore + 1
+          : currentUser.totalScore,
+      },
+      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    });
   };
 
   const setDisabled = (): boolean => {
@@ -51,8 +60,7 @@ export default function TriviaOptions({
     return false;
   };
 
-  console.log(currentUser);
-
+  // TODO show the answer you chose when disabled when coming back to page
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -71,8 +79,8 @@ export default function TriviaOptions({
               <input
                 type="radio"
                 id={answerId}
-                name="answerId"
-                value={answerId}
+                name="answer"
+                value={`${answerId}...${correctOption.id}`}
                 onChange={handleChange}
               />
               <label htmlFor={answerId}>{answerContent}</label>

@@ -108,7 +108,7 @@ export const ANSWER_QUESTION_MUTATION = gql`
   mutation ANSWER_QUESTION_MUTATION(
     $questionId: ID!
     $userId: ID!
-    $currentWeekscore: Int
+    $currentWeekScore: Int
     $totalScore: Int
   ) {
     updateQuestion(
@@ -120,9 +120,11 @@ export const ANSWER_QUESTION_MUTATION = gql`
 
     updateUser(
       id: $userId
-      data: { currentWeekScore: $currentWeekscore, totalScore: $totalScore }
+      data: { currentWeekScore: $currentWeekScore, totalScore: $totalScore }
     ) {
       id
+      currentWeekScore
+      totalScore
     }
   }
 `;
