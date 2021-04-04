@@ -5,6 +5,7 @@ import {
   timeUntilTriviaString,
 } from '../util/times';
 import { TriviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
+import { TimerStyles } from '../styles/MainStyles';
 
 export default function CountdownToTrivia(): JSX.Element {
   const controller = new AbortController();
@@ -20,9 +21,5 @@ export default function CountdownToTrivia(): JSX.Element {
     triviaStatusSet(TriviaStatuses.trivia);
   }
 
-  return (
-    <p className="timer">
-      Trivia starts in <span id="fridayTimer">{fridayTimer}</span>
-    </p>
-  );
+  return <TimerStyles>Trivia starts in {fridayTimer}</TimerStyles>;
 }

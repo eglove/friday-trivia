@@ -3,9 +3,16 @@ import { TOP_VOTED_VALID_QUIZ_QUERY } from '../../graphql/queries';
 import { TriviaStyles } from '../../styles/TrivaStyles';
 import TriviaQuestions from './TriviaQuestions';
 import { validated } from '../../util/util';
+import TriviaCountdown from './TriviaCountdown';
+import { TriviaStatusConsumer } from '../../lib/triviaStatus';
 
 export default function Trivia(): JSX.Element {
-  const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY);
+  const { currentNumberOfQuestions } = TriviaStatusConsumer();
+  const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY, {
+    variables: {
+      numOfQuestions: currentNumberOfQuestions,
+    },
+  });
 
   if (loading) return <p>Loading...</p>;
 
@@ -13,10 +20,13 @@ export default function Trivia(): JSX.Element {
 
   const trivia = data?.allQuizzes[0];
 
+  console.log(trivia);
+
   if (validated(trivia)) {
     return (
       <TriviaStyles>
         <h1>{trivia.subject}</h1>
+        <TriviaCountdown />
         <TriviaQuestions questions={trivia.question} />
       </TriviaStyles>
     );

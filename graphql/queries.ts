@@ -119,18 +119,18 @@ export const TOTAL_QUIZZES_QUERY = gql`
 `;
 
 export const TOP_VOTED_VALID_QUIZ_QUERY = gql`
-  query TOP_VOTED_VALID_QUIZ_QUERY {
+  query TOP_VOTED_VALID_QUIZ_QUERY($numOfQuestions: Int!) {
     allQuizzes(
       first: 1
       skip: 0
       sortBy: [votes_DESC]
-      where: { numberOfQuestions_gte: 10 }
+      where: { numberOfQuestions_gte: $numOfQuestions }
     ) {
       id
       subject
       numberOfQuestions
       question(
-        first: 10
+        first: $numOfQuestions
         sortBy: [votes_DESC]
         where: { numberOfOptions_gte: 4 }
       ) {

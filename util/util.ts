@@ -20,11 +20,9 @@ export const randomizeOptionOrder = function (
   return indexes;
 };
 
+// TODO does not validate 10 questions are available, due to Trivia only
+// TODO adding one at a time by limit on query
 export const validated = (trivia: Quiz): boolean => {
-  if (!trivia || trivia.question?.length < 10) {
-    return false;
-  }
-
   for (let i = 0; i < trivia.question.length; i += 1) {
     if (
       trivia.question[i].incorrect.length < 3 ||

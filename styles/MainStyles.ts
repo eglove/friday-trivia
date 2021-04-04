@@ -9,6 +9,10 @@ export const MainPageStyles = styled.div`
   }
 `;
 
+export const TimerStyles = styled.div`
+  text-align: center;
+`;
+
 export const FlexStyles = styled.div`
   display: flex;
 `;

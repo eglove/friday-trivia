@@ -20,6 +20,40 @@ export const daysUntilFriday = (): number => {
   return days;
 };
 
+export const getStartTime = (): Date => {
+  let startTime = new Date();
+  // Trivia starts at 9AM friday
+  startTime.setHours(9, 0, 0, 0);
+  startTime = new Date(
+    startTime.setDate(startTime.getDate() + daysUntilFriday())
+  );
+  return startTime;
+};
+
+export const getEndTime = (): Date => {
+  let endTime = new Date();
+  // Trivia ends at 3:30PM friday
+  endTime.setHours(15, 30, 0, 0);
+  endTime = new Date(endTime.setDate(endTime.getDate() + daysUntilFriday()));
+  return endTime;
+};
+
+export const triviaQuestionTimes = (): Array<Date> => {
+  const startTime = getStartTime();
+  const endTime = getEndTime();
+  const numberOfQuestions = 10;
+
+  const questionTimes = [startTime];
+  const questionTime = (endTime.valueOf() - startTime.valueOf()) / 10;
+  for (let i = 0; i < numberOfQuestions - 1; i += 1) {
+    questionTimes.push(
+      new Date(startTime.setTime(startTime.getTime() + questionTime))
+    );
+  }
+
+  return questionTimes;
+};
+
 export const daysToSeconds = (days: number): number => days * 24 * 60 * 60;
 
 export const secondsToString = (seconds: number): string => {
@@ -31,16 +65,26 @@ export const secondsToString = (seconds: number): string => {
 };
 
 export const timeUntilTriviaString = (): string => {
-  let friday = new Date();
-  // Trivia starts at 9AM
-  friday.setHours(9, 0, 0, 0);
-  friday = new Date(friday.setDate(friday.getDate() + daysUntilFriday()));
+  const startTime = getStartTime();
 
   // Use millisecond values (Unix Timestamp)
   return secondsToString(
-    Math.floor(friday.valueOf() / 1000) - Math.floor(Date.now() / 1000)
+    Math.floor(startTime.valueOf() / 1000) - Math.floor(Date.now() / 1000)
   );
 };
+
+export const distanceBetweenTimes = (farDate: Date, nearDate: Date): number =>
+  Math.floor(farDate?.valueOf() / 1000) -
+  Math.floor(nearDate?.valueOf() / 1000);
+
+export const verifyTimesAreSameToSecond = (
+  timeOne: Date,
+  timeTwo: Date
+): boolean =>
+  timeOne.getDay() === timeTwo.getDay() &&
+  timeOne.getHours() === timeTwo.getHours() &&
+  timeOne.getMinutes() === timeTwo.getMinutes() &&
+  timeOne.getSeconds() === timeTwo.getSeconds();
 
 // An overengineered setInterval
 // https://youtu.be/MCi6AZMkxcU

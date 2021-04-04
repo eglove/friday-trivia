@@ -7,6 +7,8 @@ interface ILocalStateContext {
   triviaStatus: string;
   triviaStatusSet: Function;
   currentUser: User;
+  currentNumberOfQuestions: number;
+  currentNumberOfQuestionsSet: Function;
 }
 
 export enum TriviaStatuses {
@@ -21,6 +23,7 @@ const LocalStateProvider = LocalStateContext.Provider;
 
 function TriviaStatusProvider({ children }: any): JSX.Element {
   const [triviaStatus, setTriviaStatus] = useState(TriviaStatuses.trivia);
+  const [currentNumberOfQuestions, setCurrentNumberOfQuestions] = useState(1);
   const { data } = useQuery(CURRENT_USER_QUERY);
   const currentUser = data?.authenticatedItem;
 
@@ -28,9 +31,21 @@ function TriviaStatusProvider({ children }: any): JSX.Element {
     setTriviaStatus(status);
   }
 
+  function currentNumberOfQuestionsSet(numOfQ: number): SetStateAction<void> {
+    setCurrentNumberOfQuestions(numOfQ);
+  }
+
   return (
     // @ts-ignore
-    <LocalStateProvider value={{ triviaStatus, triviaStatusSet, currentUser }}>
+    <LocalStateProvider
+      value={{
+        triviaStatus,
+        triviaStatusSet,
+        currentNumberOfQuestions,
+        currentNumberOfQuestionsSet,
+        currentUser,
+      }}
+    >
       {children}
     </LocalStateProvider>
   );
