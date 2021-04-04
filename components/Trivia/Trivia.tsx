@@ -1,41 +1,35 @@
-import { useQuery } from '@apollo/client';
-import { TOP_VOTED_VALID_QUIZ_QUERY } from '../../graphql/queries';
+import Head from 'next/head';
 import { TriviaStyles } from '../../styles/TrivaStyles';
 import TriviaQuestions from './TriviaQuestions';
-import { validated } from '../../util/util';
+import { thisWeeksQuiz } from '../../util/util';
 import TriviaCountdown from './TriviaCountdown';
 import { TriviaStatusConsumer } from '../../lib/triviaStatus';
 import { questionsPerQuiz } from '../../config';
 
 export default function Trivia(): JSX.Element {
   const { currentNumberOfQuestions } = TriviaStatusConsumer();
-  const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY, {
-    variables: {
-      numOfQuestions:
-        currentNumberOfQuestions > questionsPerQuiz
-          ? questionsPerQuiz
-          : currentNumberOfQuestions,
-    },
-  });
+  const quiz = thisWeeksQuiz(
+    currentNumberOfQuestions > 10 ? 10 : questionsPerQuiz
+  );
 
-  if (loading) return <p>Loading...</p>;
-
-  if (error) return <p>Error! {error.message}</p>;
-
-  const trivia = data?.allQuizzes[0];
-
-  if (validated(trivia)) {
+  if (typeof quiz !== 'boolean') {
     return (
       <TriviaStyles>
-        <h1>{trivia.subject}</h1>
+        <Head>
+          <title>Friday Trivia!</title>
+        </Head>
+        <h1>{quiz.subject}</h1>
         <TriviaCountdown />
-        <TriviaQuestions questions={trivia.question} />
+        <TriviaQuestions questions={quiz.question} />
       </TriviaStyles>
     );
   }
 
   return (
     <TriviaStyles>
+      <Head>
+        <title>Friday Trivia!</title>
+      </Head>
       <h1>Sorry, no trivia this week. 😥</h1>
       <p>Here's our criteria for a valid trivia:</p>
       <ul>

@@ -130,10 +130,19 @@ export const ANSWER_QUESTION_MUTATION = gql`
 `;
 
 export const VOTE_ON_QUIZ = gql`
-  mutation VOTE_ON_QUIZ($quizId: ID!, $userId: ID!, $votes: Int) {
+  mutation VOTE_ON_QUIZ(
+    $quizId: ID!
+    $userId: ID!
+    $votes: Int
+    $week: String
+  ) {
     updateQuiz(
       id: $quizId
-      data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
+      data: {
+        votes: $votes
+        week: $week
+        usersVoted: { connect: { id: $userId } }
+      }
     ) {
       id
     }
@@ -157,6 +166,14 @@ export const VOTE_ON_OPTION = gql`
       id: $optionId
       data: { votes: $votes, usersVoted: { connect: { id: $userId } } }
     ) {
+      id
+    }
+  }
+`;
+
+export const SET_CURRENT_WEEK_QUIZ_MUTATION = gql`
+  mutation SET_CURRENT_WEEK_QUIZ_MUTATION($quizId: ID!, $date: String) {
+    updateQuiz(id: $quizId, data: { week: $date }) {
       id
     }
   }

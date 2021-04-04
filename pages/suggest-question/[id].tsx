@@ -1,6 +1,6 @@
 import { NextRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
-import SuggestQuestion from '../../components/Quiz/SuggestForms/SuggestQuestion';
+import SuggestQuestion from '../../components/Voting/SuggestForms/SuggestQuestion';
 import { SINGLE_QUIZ_QUERY } from '../../graphql/queries';
 
 export default function suggestQuestion({ query }: NextRouter): JSX.Element {

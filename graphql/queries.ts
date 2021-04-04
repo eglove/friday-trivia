@@ -37,6 +37,19 @@ export const USER_SCORES_QUERY = gql`
   }
 `;
 
+export const CURRENT_WEEK_RESULTS_QUERY = gql`
+  query CURRENT_WEEK_RESULTS_QUERY {
+    allUsers(
+      sortBy: [currentWeekScore_DESC]
+      where: { currentWeekScore_gt: 0 }
+    ) {
+      id
+      name
+      currentWeekScore
+    }
+  }
+`;
+
 export const ALL_QUIZZES_QUERY = gql`
   query ALL_QUIZZES_QUERY($skip: Int = 0, $first: Int) {
     allQuizzes(first: $first, skip: $skip, sortBy: [votes_DESC]) {

@@ -1,6 +1,7 @@
-import Voting from '../components/Quiz/Voting';
+import Voting from '../components/Voting/Voting';
 import { TriviaStatusConsumer, TriviaStatuses } from '../lib/triviaStatus';
 import Trivia from '../components/Trivia/Trivia';
+import Results from '../components/Results/Results';
 
 export default function Index(): JSX.Element {
   const { triviaStatus } = TriviaStatusConsumer();
@@ -13,7 +14,7 @@ export default function Index(): JSX.Element {
       return <Trivia />;
     }
     case TriviaStatuses.results: {
-      return <p>Results</p>;
+      return <Results />;
     }
     default: {
       return <p>Hmm..</p>;

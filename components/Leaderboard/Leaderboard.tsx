@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import Head from 'next/head';
 import { USER_SCORES_QUERY } from '../../graphql/queries';
 import { ColumnGrid } from '../../styles/MainStyles';
 import { User } from '../../graphql/objectInterfaces';
@@ -15,6 +16,9 @@ export default function Leaderboard(): JSX.Element {
 
   return (
     <LeaderBoardStyles>
+      <Head>
+        <title>Friday Trivia Leaderboard</title>
+      </Head>
       <h1>Friday Trivia Leaderboard</h1>
       <ColumnGrid columns={3} id="scoreHeader">
         <div>Username</div>
@@ -22,7 +26,7 @@ export default function Leaderboard(): JSX.Element {
         <div>Current Week Score</div>
       </ColumnGrid>
       {allUsers.map((user: User, index: number) => (
-        <ColumnGrid columns={3} id="scoreTable">
+        <ColumnGrid key={index} columns={3} id="scoreTable">
           <div>
             {index + 1}. {user.name}
           </div>

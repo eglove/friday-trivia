@@ -1,5 +1,7 @@
+import { useQuery } from '@apollo/client';
 import { Option, Quiz } from '../graphql/objectInterfaces';
 import { questionsPerQuiz } from '../config';
+import { TOP_VOTED_VALID_QUIZ_QUERY } from '../graphql/queries';
 
 export const randomizeOptionOrder = (
   incorrectOptions: Array<Option>
@@ -21,21 +23,33 @@ export const randomizeOptionOrder = (
   return indexes;
 };
 
-export const validated = (trivia: Quiz): boolean => {
-  if (trivia.numberOfQuestions < questionsPerQuiz) {
+export const thisWeeksQuiz = (numOfQuestions: number): boolean | Quiz => {
+  const { data } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY, {
+    variables: {
+      numOfQuestions,
+    },
+  });
+
+  if (typeof data === 'undefined') {
     return false;
   }
 
-  for (let i = 0; i < trivia.question.length; i += 1) {
+  const quiz = data.allQuizzes[0];
+
+  if (quiz.numberOfQuestions < questionsPerQuiz) {
+    return false;
+  }
+
+  for (let i = 0; i < quiz.question.length; i += 1) {
     if (
       // @ts-ignore
-      trivia.question[i].incorrect.length < 3 ||
+      quiz.question[i]?.incorrect?.length < 3 ||
       // @ts-ignore
-      trivia.question[i].correct.length < 1
+      quiz.question[i]?.correct?.length < 1
     ) {
       return false;
     }
   }
 
-  return true;
+  return quiz;
 };

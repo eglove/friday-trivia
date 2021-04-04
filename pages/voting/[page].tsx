@@ -1,1 +1,1 @@
-export { default } from '../../components/Quiz/Voting';
+export { default } from '../../components/Voting/Voting';
