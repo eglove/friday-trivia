@@ -17,3 +17,17 @@ export const UserResultsColumnStyles = styled.div`
     text-decoration: underline;
   }
 `;
+
+export const TriviaQAResultsColumnStyles = styled.div`
+  div:nth-child(2) {
+    margin-bottom: 1rem;
+  }
+
+  div.question {
+    font-weight: bold;
+  }
+
+  div.answer {
+    margin-top: 0.2rem;
+  }
+`;

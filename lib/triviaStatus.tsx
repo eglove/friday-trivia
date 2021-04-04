@@ -23,7 +23,7 @@ const LocalStateProvider = LocalStateContext.Provider;
 
 function TriviaStatusProvider({ children }: any): JSX.Element {
   // todo set initial status state by current date/time
-  const [triviaStatus, setTriviaStatus] = useState(TriviaStatuses.voting);
+  const [triviaStatus, setTriviaStatus] = useState(TriviaStatuses.results);
   // todo set initial state by value on database
   const [currentNumberOfQuestions, setCurrentNumberOfQuestions] = useState(1);
   const { data } = useQuery(CURRENT_USER_QUERY);
