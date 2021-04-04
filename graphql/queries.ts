@@ -7,6 +7,8 @@ export const CURRENT_USER_QUERY = gql`
         id
         email
         name
+        currentWeekScore
+        totalScore
         votedOnQuizzes {
           id
         }
@@ -14,6 +16,9 @@ export const CURRENT_USER_QUERY = gql`
           id
         }
         votedOnOptions {
+          id
+        }
+        answeredQuestions {
           id
         }
       }

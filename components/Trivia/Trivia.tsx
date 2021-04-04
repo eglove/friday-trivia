@@ -5,14 +5,16 @@ import TriviaQuestions from './TriviaQuestions';
 import { validated } from '../../util/util';
 import TriviaCountdown from './TriviaCountdown';
 import { TriviaStatusConsumer } from '../../lib/triviaStatus';
+import { questionsPerQuiz } from '../../config';
 
 export default function Trivia(): JSX.Element {
   const { currentNumberOfQuestions } = TriviaStatusConsumer();
   const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY, {
     variables: {
-      // Max 10 questions per trivia
       numOfQuestions:
-        currentNumberOfQuestions > 10 ? 10 : currentNumberOfQuestions,
+        currentNumberOfQuestions > questionsPerQuiz
+          ? questionsPerQuiz
+          : currentNumberOfQuestions,
     },
   });
 
@@ -38,7 +40,9 @@ export default function Trivia(): JSX.Element {
       <p>Here's our criteria for a valid trivia:</p>
       <ul>
         <li>1 Subject must be available.</li>
-        <li>10 Questions must be available for that subject.</li>
+        <li>
+          {questionsPerQuiz} Questions must be available for that subject.
+        </li>
         <li>4 Answers must be available for each question.</li>
         <li>3 Answers must be incorrect, 1 answer must be correct.</li>
       </ul>

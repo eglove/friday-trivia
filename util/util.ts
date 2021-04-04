@@ -1,4 +1,5 @@
 import { Option, Quiz } from '../graphql/objectInterfaces';
+import { questionsPerQuiz } from '../config';
 
 export const randomizeOptionOrder = (
   incorrectOptions: Array<Option>
@@ -21,7 +22,7 @@ export const randomizeOptionOrder = (
 };
 
 export const validated = (trivia: Quiz): boolean => {
-  if (trivia.numberOfQuestions < 10) {
+  if (trivia.numberOfQuestions < questionsPerQuiz) {
     return false;
   }
 

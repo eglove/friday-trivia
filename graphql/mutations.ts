@@ -104,6 +104,29 @@ export const SUGGEST_OPTION_MUTATION = gql`
   }
 `;
 
+export const ANSWER_QUESTION_MUTATION = gql`
+  mutation ANSWER_QUESTION_MUTATION(
+    $questionId: ID!
+    $userId: ID!
+    $currentWeekscore: Int
+    $totalScore: Int
+  ) {
+    updateQuestion(
+      id: $questionId
+      data: { usersAnswered: { connect: { id: $userId } } }
+    ) {
+      id
+    }
+
+    updateUser(
+      id: $userId
+      data: { currentWeekScore: $currentWeekscore, totalScore: $totalScore }
+    ) {
+      id
+    }
+  }
+`;
+
 export const VOTE_ON_QUIZ = gql`
   mutation VOTE_ON_QUIZ($quizId: ID!, $userId: ID!, $votes: Int) {
     updateQuiz(

@@ -10,6 +10,7 @@ import {
   verifyTimesAreSameToSecond,
 } from '../../util/times';
 import { TimerStyles } from '../../styles/MainStyles';
+import { questionsPerQuiz } from '../../config';
 
 export default function TriviaCountdown(): JSX.Element {
   const controller = new AbortController();
@@ -53,10 +54,10 @@ export default function TriviaCountdown(): JSX.Element {
 
   return (
     <>
-      {currentNumberOfQuestions === 10 && (
+      {currentNumberOfQuestions === questionsPerQuiz && (
         <TimerStyles>Trivia Ends at 3:30!</TimerStyles>
       )}
-      {currentNumberOfQuestions < 10 && (
+      {currentNumberOfQuestions < questionsPerQuiz && (
         <TimerStyles>
           Time To Next Question: {secondsToString(timeToNextQuestion)}
         </TimerStyles>

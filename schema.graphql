@@ -199,6 +199,7 @@ type Query {
 " A keystone list "
 type Question {
     _optionMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
+    _usersAnsweredMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     _usersVotedMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): _QueryMeta
     content: String
     id: ID!
@@ -206,6 +207,7 @@ type Question {
     option(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): [Option!]!
     quiz: Quiz
     userCreated: User
+    usersAnswered(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     usersVoted(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortUsersBy!], where: UserWhereInput): [User!]!
     votes: Int
 }
@@ -248,12 +250,14 @@ type SendUserPasswordResetLinkResult {
 
 " A keystone list "
 type User {
+    _answeredQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _optionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
     _questionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _quizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
     _votedOnOptionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortOptionsBy!], where: OptionWhereInput): _QueryMeta
     _votedOnQuestionsMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): _QueryMeta
     _votedOnQuizzesMeta(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuizzesBy!], where: QuizWhereInput): _QueryMeta
+    answeredQuestions(first: Int, orderBy: String, search: String, skip: Int, sortBy: [SortQuestionsBy!], where: QuestionWhereInput): [Question!]!
     currentWeekScore: Int
     email: String
     id: ID!
@@ -500,6 +504,8 @@ enum SortQuestionsBy {
     quiz_DESC
     userCreated_ASC
     userCreated_DESC
+    usersAnswered_ASC
+    usersAnswered_DESC
     usersVoted_ASC
     usersVoted_DESC
     votes_ASC
@@ -543,6 +549,8 @@ enum SortRolesBy {
 }
 
 enum SortUsersBy {
+    answeredQuestions_ASC
+    answeredQuestions_DESC
     currentWeekScore_ASC
     currentWeekScore_DESC
     email_ASC
@@ -670,6 +678,7 @@ input QuestionCreateInput {
     option: OptionRelateToManyInput
     quiz: QuizRelateToOneInput
     userCreated: UserRelateToOneInput
+    usersAnswered: UserRelateToManyInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -694,6 +703,7 @@ input QuestionUpdateInput {
     option: OptionRelateToManyInput
     quiz: QuizRelateToOneInput
     userCreated: UserRelateToOneInput
+    usersAnswered: UserRelateToManyInput
     usersVoted: UserRelateToManyInput
     votes: Int
 }
@@ -741,6 +751,12 @@ input QuestionWhereInput {
     quiz_is_null: Boolean
     userCreated: UserWhereInput
     userCreated_is_null: Boolean
+    " condition must be true for all nodes "
+    usersAnswered_every: UserWhereInput
+    " condition must be false for all nodes "
+    usersAnswered_none: UserWhereInput
+    " condition must be true for at least 1 node "
+    usersAnswered_some: UserWhereInput
     " condition must be true for all nodes "
     usersVoted_every: UserWhereInput
     " condition must be false for all nodes "
@@ -962,6 +978,7 @@ input RolesUpdateInput {
 }
 
 input UserCreateInput {
+    answeredQuestions: QuestionRelateToManyInput
     currentWeekScore: Int
     email: String
     name: String
@@ -994,6 +1011,7 @@ input UserRelateToOneInput {
 }
 
 input UserUpdateInput {
+    answeredQuestions: QuestionRelateToManyInput
     currentWeekScore: Int
     email: String
     name: String
@@ -1014,6 +1032,12 @@ input UserUpdateInput {
 input UserWhereInput {
     AND: [UserWhereInput]
     OR: [UserWhereInput]
+    " condition must be true for all nodes "
+    answeredQuestions_every: QuestionWhereInput
+    " condition must be false for all nodes "
+    answeredQuestions_none: QuestionWhereInput
+    " condition must be true for at least 1 node "
+    answeredQuestions_some: QuestionWhereInput
     currentWeekScore: Int
     currentWeekScore_gt: Int
     currentWeekScore_gte: Int

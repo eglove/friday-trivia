@@ -1,3 +1,5 @@
+import { questionsPerQuiz } from '../config';
+
 enum DaysOfWeek {
   'Sunday',
   'Monday',
@@ -41,11 +43,11 @@ export const getEndTime = (): Date => {
 export const triviaQuestionTimes = (): Array<Date> => {
   const startTime = getStartTime();
   const endTime = getEndTime();
-  const numberOfQuestions = 10;
 
   const questionTimes = [startTime];
-  const questionTime = (endTime.valueOf() - startTime.valueOf()) / 10;
-  for (let i = 0; i < numberOfQuestions - 1; i += 1) {
+  const questionTime =
+    (endTime.valueOf() - startTime.valueOf()) / questionsPerQuiz;
+  for (let i = 0; i < questionsPerQuiz - 1; i += 1) {
     questionTimes.push(
       new Date(startTime.setTime(startTime.getTime() + questionTime))
     );

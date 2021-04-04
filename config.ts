@@ -1,3 +1,4 @@
 export const endpoint = `http://localhost:3000/api/graphql`;
 export const prodEndpoint = `todo`;
 export const quizPerPage = 10;
+export const questionsPerQuiz = 10;

@@ -27,6 +27,7 @@ export interface User {
   votedOnOptions: Array<Option>;
   votedOnQuestions: Array<Question>;
   votedOnQuizzes: Array<Quiz>;
+  answeredQuestions: Array<Option>;
 }
 
 export interface Option {
