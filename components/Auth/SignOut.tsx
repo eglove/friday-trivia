@@ -7,8 +7,6 @@ export default function SignOut(): JSX.Element {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
 
-  return (
-    // @ts-ignore
-    <a onClick={signOut}>Sign Out</a>
-  );
+  // @ts-ignore
+  return <a onClick={signOut}>Sign Out</a>;
 }

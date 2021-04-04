@@ -26,7 +26,9 @@ export default function TriviaOptions({
               incorrectOptions[optionIndex]?.content ?? correctOption.content
             }
           />
-          <label htmlFor={questionId}>
+          <label
+            htmlFor={incorrectOptions[optionIndex]?.id ?? correctOption.id}
+          >
             {incorrectOptions[optionIndex]?.content ?? correctOption.content}
           </label>
         </div>

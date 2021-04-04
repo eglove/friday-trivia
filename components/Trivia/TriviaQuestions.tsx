@@ -16,7 +16,9 @@ export default function TriviaQuestions({
           <p>{question.content}</p>
           <TriviaOptions
             questionId={question.id}
+            // @ts-ignore
             correctOption={question.correct[0]}
+            // @ts-ignore
             incorrectOptions={question.incorrect}
           />
         </TriviaQuestionStyles>

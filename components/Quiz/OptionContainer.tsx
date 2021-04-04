@@ -10,7 +10,7 @@ import {
 } from '../../styles/QuizStyles';
 
 interface IOptionContainer {
-  options: Array<Option>;
+  options: Array<Option> | undefined;
   questionId: string;
 }
 
@@ -28,14 +28,14 @@ export default function OptionContainer({
             setDisplayOption(displayOption === 'none' ? '' : 'none')
           }
         >
-          {displayOption === 'none' ? 'Show' : 'Hide'} {options.length} Options
+          {displayOption === 'none' ? 'Show' : 'Hide'} {options?.length} Options
         </ShowHideButton>
         <SuggestButton>
           <Link href={`/suggest-answer/${questionId}`}>Suggest Answers</Link>
         </SuggestButton>
       </FlexStyles>
       <Display display={displayOption}>
-        {options.map((option: Option) => (
+        {options?.map((option: Option) => (
           <ColumnGrid columns={2} key={option.id}>
             <LiCapitalize>{option.content}</LiCapitalize>
             <UpdateOption

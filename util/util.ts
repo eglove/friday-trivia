@@ -1,8 +1,8 @@
 import { Option, Quiz } from '../graphql/objectInterfaces';
 
-export const randomizeOptionOrder = function (
+export const randomizeOptionOrder = (
   incorrectOptions: Array<Option>
-): Array<number> {
+): Array<number> => {
   const indexes = Array.from({ length: incorrectOptions.length + 1 });
   for (let i = 0; i < indexes.length; i += 1) {
     indexes[i] = i;
@@ -27,7 +27,9 @@ export const validated = (trivia: Quiz): boolean => {
 
   for (let i = 0; i < trivia.question.length; i += 1) {
     if (
+      // @ts-ignore
       trivia.question[i].incorrect.length < 3 ||
+      // @ts-ignore
       trivia.question[i].correct.length < 1
     ) {
       return false;

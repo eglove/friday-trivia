@@ -77,11 +77,11 @@ export default function SuggestOption({
             />
           </label>
           <br />
-          <label htmlFor="isCorrect">
+          <label htmlFor="isIncorrect">
             Incorrect Answer:
             <input
               type="radio"
-              id="isCorrect"
+              id="isIncorrect"
               name="isCorrect"
               value="false"
               onChange={handleChange}
