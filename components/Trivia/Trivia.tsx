@@ -10,7 +10,9 @@ export default function Trivia(): JSX.Element {
   const { currentNumberOfQuestions } = TriviaStatusConsumer();
   const { data, loading, error } = useQuery(TOP_VOTED_VALID_QUIZ_QUERY, {
     variables: {
-      numOfQuestions: currentNumberOfQuestions,
+      // Max 10 questions per trivia
+      numOfQuestions:
+        currentNumberOfQuestions > 10 ? 10 : currentNumberOfQuestions,
     },
   });
 
@@ -19,8 +21,6 @@ export default function Trivia(): JSX.Element {
   if (error) return <p>Error! {error.message}</p>;
 
   const trivia = data?.allQuizzes[0];
-
-  console.log(trivia);
 
   if (validated(trivia)) {
     return (

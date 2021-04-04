@@ -34,6 +34,8 @@ export default function TriviaCountdown(): JSX.Element {
         currentNumberOfQuestionsSet(currentNumberOfQuestions + 1);
       }
 
+      // 11 Start countdown to end trivia
+      // 12 Move to results page
       if (currentNumberOfQuestions === 12) {
         triviaStatusSet(TriviaStatuses.results);
       } else if (currentNumberOfQuestions === 11) {
